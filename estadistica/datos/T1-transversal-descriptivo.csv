@@ -1,0 +1,25 @@
+﻿Identificador,Edad en años,Sexo registrado,Turno habitual,Índice de masa corporal (kg/m²),Fuerza de prensión (kg),Distancia caminada en 6 minutos (m),Nivel de actividad física
+E01,58,Hombre,Día,26.5,34.8,594,Bajo
+E02,53,Mujer,Noche,23.3,43.6,680,Moderado
+E03,31,Mujer,Día,27.5,20.3,610,Alto
+E04,60,Hombre,Noche,23.9,27.8,495,Bajo
+E05,54,Hombre,Día,25.2,41.2,568,Alto
+E06,36,Hombre,Día,21.6,17,561,Moderado
+E07,32,Hombre,Noche,31.6,20.6,388,Bajo
+E08,57,Mujer,Día,28.4,37.4,612,Bajo
+E09,55,Hombre,Noche,20.7,21.8,489,Alto
+E10,52,Hombre,Noche,29,36.3,646,Moderado
+E11,41,Mujer,Noche,23.3,40.7,376,Alto
+E12,55,Hombre,Día,25.4,39,470,Bajo
+E13,24,Hombre,Día,25.6,18.6,444,Bajo
+E14,31,Mujer,Día,26.9,25.1,461,Moderado
+E15,37,Mujer,Noche,31.2,30.9,665,Moderado
+E16,58,Mujer,Día,25.3,26.5,450,Alto
+E17,33,Hombre,Noche,19.3,30.8,616,Bajo
+E18,31,Hombre,Noche,27.8,41.7,500,Moderado
+E19,60,Hombre,Día,22.1,30.8,672,Bajo
+E20,32,Mujer,Día,20.8,31.4,670,Bajo
+E21,26,Hombre,Día,28.2,27,477,Moderado
+E22,22,Mujer,Día,22.5,23.2,576,Alto
+E23,56,Hombre,Día,30.2,27,480,Bajo
+E24,41,Mujer,Día,31.3,19.5,491,Alto

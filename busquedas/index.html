@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Búsquedas científicas | Diego Fernando Afanador Restrepo</title>
+<meta name="description" content="Tutorial y constructor de búsquedas científicas en educación y salud: fuentes, revistas, lectura crítica, PICO, PEO, PCC y SPIDER.">
+<meta name="author" content="Ft. Diego Fernando Afanador Restrepo">
+<meta name="theme-color" content="#001282">
+<link rel="icon" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+ <symbol id="i-bars" viewBox="0 0 24 24"><path d="M5 20V10M10 20V4M15 20v-7M20 20v-4"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></symbol>
+ <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></symbol>
+ <symbol id="i-link" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></symbol>
+ <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></symbol>
+ <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+ <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 4h4v4M4 20 20 4M20 16v4h-4M15 15l5 5M4 4l5 5"/></symbol>
+ <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+ <symbol id="i-puzzle" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></symbol>
+ <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></symbol>
+ <symbol id="i-paper" viewBox="0 0 24 24"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+</svg>
+
+<a class="skip" href="#ruta">Saltar al tutorial</a>
+<header class="site-header">
+ <div class="wrap top">
+  <a href="../index.html">← Herramientas y recursos</a>
+  <span class="brand"><img class="avatar-sm" src="../assets/perfil.jpg" width="32" height="32" alt="" decoding="async"> Investigación en educación y salud</span>
+ </div>
+</header>
+
+<main class="wrap">
+<section class="hero">
+ <div class="hero-text">
+  <p class="eyebrow">Tutorial práctico · De la pregunta a la evidencia</p>
+  <h1>Búsquedas <span>científicas</span></h1>
+  <p class="lead">Buscar artículos no es escribir palabras en Google y quedarse con los primeros cinco. Es un método, y se aprende. Aquí te acompaño paso a paso: dónde buscar, cómo leer lo que encuentras, cómo armar tu cadena y cómo decidir qué estudios se quedan.</p>
+  <div class="actions"><a class="button" href="#ruta">Empezar por el paso 1</a><a class="button ghost" href="#constructor">Ya sé lo básico: ir al constructor</a></div>
+ </div>
+ <aside class="signature" aria-label="Autor">
+  <img class="avatar" src="../assets/perfil.jpg" width="120" height="120" alt="Foto de Diego Fernando Afanador Restrepo" decoding="async" fetchpriority="high">
+  <div>
+   <b>Ft. Diego Fernando Afanador Restrepo</b>
+   <span>Fisioterapeuta · Profesor de Planta de la Universidad del Cauca</span>
+  </div>
+  <p>«Lo escribí como lo explico en clase: con ejemplos, con los errores que más veo y con tiempo para que pruebes por tu cuenta.»</p>
+ </aside>
+</section>
+
+<nav class="learning-path" aria-label="Ruta del tutorial">
+ <a href="#bases"><span class="step-icon"><svg><use href="#i-search"/></svg></span><span><small>Paso 1</small><b>Ubícate</b><em>¿Dónde busco?</em></span></a>
+ <a href="#revistas"><span class="step-icon"><svg><use href="#i-bars"/></svg></span><span><small>Paso 2</small><b>Compara</b><em>¿Qué dice el cuartil?</em></span></a>
+ <a href="#calidad"><span class="step-icon"><svg><use href="#i-check"/></svg></span><span><small>Paso 3</small><b>Examina</b><em>¿Le puedo creer?</em></span></a>
+ <a href="#pregunta"><span class="step-icon"><svg><use href="#i-question"/></svg></span><span><small>Paso 4</small><b>Pregunta</b><em>¿Qué quiero saber?</em></span></a>
+ <a href="#cadena"><span class="step-icon"><svg><use href="#i-link"/></svg></span><span><small>Paso 5</small><b>Combina</b><em>Arma tu cadena</em></span></a>
+ <a href="#seleccion"><span class="step-icon"><svg><use href="#i-filter"/></svg></span><span><small>Paso 6</small><b>Selecciona</b><em>Aplica tus criterios</em></span></a>
+</nav>
+
+<div id="ruta" class="mission">
+ <div>
+  <p class="eyebrow">Antes de empezar</p>
+  <h2>¿Qué te vas a llevar de aquí?</h2>
+  <p>Al terminar los seis pasos tendrás tres cosas en la mano: una pregunta bien formulada, una cadena de búsqueda lista para probar y una ficha que te permite repetir la búsqueda cuando quieras. Ve en orden la primera vez; después usa la ruta de arriba para saltar a lo que necesites.</p>
+ </div>
+ <ol class="mission-flow">
+  <li><svg><use href="#i-chat"/></svg><b>Pregunta</b></li>
+  <li><svg><use href="#i-puzzle"/></svg><b>Cadena</b></li>
+  <li><svg><use href="#i-file"/></svg><b>Ficha</b></li>
+ </ol>
+</div>
+
+<!-- PASO 1 -->
+<section id="bases">
+ <p class="eyebrow"><span class="step-num">1</span> Explora y distingue</p>
+ <h2>Bases de datos científicas</h2>
+ <p class="section-lead">Empecemos por lo básico: no todo lo que tiene una barra de búsqueda es una base de datos. Una base es como el fichero de una biblioteca. Te dice que el documento existe y dónde está, pero muchas veces no te da el texto completo.</p>
+
+ <div class="source-lab">
+  <figure class="catalog-visual" aria-label="Esquema de registros organizados en una base">
+   <div class="catalog-top"><svg><use href="#i-book"/></svg> Catálogo científico <span class="live-dot"></span></div>
+   <div class="catalog-search"><svg><use href="#i-search"/></svg> aprendizaje colaborativo</div>
+   <div class="record"><svg class="paper-icon"><use href="#i-paper"/></svg><div><b>Aprender entre pares</b><small>Autores · Año · Revista</small><span class="tag-mini">Resumen</span><span class="tag-mini">Descriptores</span></div></div>
+   <div class="record"><svg class="paper-icon"><use href="#i-paper"/></svg><div><b>Colaboración en el aula</b><small>Autores · Año · Revista</small><span class="tag-mini">Resumen</span><span class="tag-mini">Referencias</span></div></div>
+   <div class="catalog-exit">Ficha bibliográfica <span>→</span> Documento ↗</div>
+   <figcaption>Ilustración con registros y títulos inventados.</figcaption>
+  </figure>
+  <div class="source-explorer">
+   <p class="eyebrow">Toca cada tipo de fuente y compara</p>
+   <div class="source-tabs" role="group" aria-label="Tipos de fuentes">
+    <button type="button" data-source="database" aria-pressed="true">Base de datos</button>
+    <button type="button" data-source="search" aria-pressed="false">Buscador</button>
+    <button type="button" data-source="repository" aria-pressed="false">Repositorio</button>
+    <button type="button" data-source="publisher" aria-pressed="false">Editorial</button>
+   </div>
+   <div id="source-explanation" class="source-answer" aria-live="polite"></div>
+  </div>
+ </div>
+
+ <div class="mini-challenge">
+  <span class="pill">Ponte a prueba</span>
+  <h3>Encontraste un artículo en Google Scholar. ¿Qué herramienta usaste?</h3>
+  <div class="quiz-options">
+   <button type="button" data-source-answer="database" class="secondary">Una base bibliográfica</button>
+   <button type="button" data-source-answer="search" class="secondary">Un buscador académico</button>
+   <button type="button" data-source-answer="repository" class="secondary">Un repositorio</button>
+  </div>
+  <p id="source-feedback" role="status">Elige una opción y te digo.</p>
+ </div>
+
+ <details>
+  <summary>Tres confusiones que veo a menudo: PubMed, BVS y SciELO</summary>
+  <p>PubMed y MEDLINE no son lo mismo: PubMed es la puerta de entrada, y adentro está MEDLINE junto con otros registros. La BVS reúne varias fuentes, entre ellas LILACS. SciELO es a la vez una colección de revistas y un sistema para buscarlas. Muchas plataformas hacen varias cosas a la vez; lo útil es saber cuál es su función principal. Ah, y ResearchGate es una red social académica, no una base de datos.</p>
+ </details>
+
+ <h3>¿Por cuál base empiezo?</h3>
+ <label for="need">Cuéntame qué estás buscando:</label>
+ <select id="need">
+  <option value="education">Educación, enseñanza y aprendizaje</option>
+  <option value="clinical">Intervenciones y salud clínica</option>
+  <option value="rehab">Fisioterapia, rehabilitación y cuidados</option>
+  <option value="regional">Salud en Latinoamérica y el Caribe</option>
+  <option value="broad">Tema interdisciplinario o revisión de alcance</option>
+  <option value="qual">Experiencias y fenómenos cualitativos</option>
+ </select>
+ <div class="callout teacher"><span class="note-label">Lo que yo haría</span><p id="recommendation" aria-live="polite"></p></div>
+
+ <details class="reference">
+  <summary>Ver el mapa completo de bases y plataformas</summary>
+  <div class="table-wrap"><table>
+   <caption>Ninguna fuente lo tiene todo: combínalas según tu pregunta</caption>
+   <thead><tr><th>Fuente</th><th>Para qué te sirve</th><th>Ten en cuenta</th></tr></thead>
+   <tbody>
+    <tr><td><a href="https://eric.ed.gov/">ERIC</a></td><td>Investigación educativa, con tesauro propio</td><td>Mezcla artículos e informes. Revisa el tipo de documento y si pasó por pares.</td></tr>
+    <tr><td>Education Source / Education Research Complete</td><td>Educación, pedagogía y práctica docente</td><td>Depende de la suscripción de tu universidad. Cada proveedor tiene su sintaxis.</td></tr>
+    <tr><td><a href="https://dialnet.unirioja.es/">Dialnet</a> / <a href="https://www.redalyc.org/">Redalyc</a></td><td>Producción iberoamericana en educación y ciencias sociales</td><td>Son servicios distintos. Úsalos para completar lo que no está en las bases internacionales.</td></tr>
+    <tr><td><a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed / MEDLINE</a></td><td>Biomedicina, con vocabulario MeSH</td><td>Buscar es gratis; el texto completo no siempre.</td></tr>
+    <tr><td><a href="https://www.embase.com/">Embase</a></td><td>Biomedicina y farmacología, con Emtree</td><td>Casi siempre requiere suscripción.</td></tr>
+    <tr><td><a href="https://www.cochranelibrary.com/central">CENTRAL</a></td><td>Registros de ensayos controlados</td><td>No la confundas con la base de revisiones Cochrane.</td></tr>
+    <tr><td><a href="https://pedro.org.au/spanish/">PEDro</a></td><td>Ensayos, revisiones y guías en fisioterapia</td><td>Tiene buscador propio: no le pegues etiquetas de PubMed.</td></tr>
+    <tr><td>CINAHL / APA PsycInfo</td><td>Cuidados y profesiones de salud / psicología</td><td>Acceso y sintaxis según el proveedor.</td></tr>
+    <tr><td><a href="https://bvsalud.org/">BVS / LILACS</a> y <a href="https://scielo.org/">SciELO</a></td><td>Producción regional en varios idiomas</td><td>Usa DeCS en BVS y no busques solo en inglés.</td></tr>
+    <tr><td>Scopus / Web of Science</td><td>Cobertura de muchas disciplinas y rastreo de citas</td><td>Por suscripción, con campos propios.</td></tr>
+    <tr><td><a href="https://scholar.google.com/">Google Scholar</a></td><td>Descubrir y rastrear como complemento</td><td>No sabes bien qué cubre ni cómo ordena. Si lo usas, anota sus límites.</td></tr>
+   </tbody>
+  </table></div>
+ </details>
+
+ <p class="tip"><span class="note-label">Ojo con esto</span>Si vas a hacer una revisión sistemática, una sola base nunca alcanza. Vas a tener que justificar cuáles usaste, revisar registros de ensayos si aplica, seguir las referencias de los artículos que encuentres y pensar en la literatura gris. Pregunta en tu biblioteca a qué bases tienes acceso: suele ser más de lo que crees.</p>
+</section>
+
+<!-- PASO 2 -->
+<section id="revistas">
+ <p class="eyebrow"><span class="step-num">2</span> Aprende moviendo una revista</p>
+ <h2>Cuartiles de las revistas científicas</h2>
+ <p class="section-lead">El cuartil es más sencillo de lo que parece. Toma todas las revistas de una categoría en un año, ordénalas por un indicador y parte la lista en cuatro. El primer cuarto es Q1, el segundo Q2, y así. Mueve la barra y míralo.</p>
+
+ <div class="quartile-lab">
+  <div class="lab-heading"><span class="pill">Simulación con 20 revistas inventadas</span><span>Mejor posición ← → Peor posición</span></div>
+  <div id="quartile-grid" class="quartile-grid"></div>
+  <label for="journal-rank">Mueve la revista en el ranking: <output id="rank-label">3 de 20</output></label>
+  <input id="journal-rank" type="range" min="1" max="20" value="3">
+  <div id="quartile-result" class="quartile-result" aria-live="polite"></div>
+  <p class="small">Es un ejemplo simplificado, sin empates. En la vida real el cuartil depende del indicador, de la categoría y del año, y una misma revista puede ser Q1 en una categoría y Q3 en otra.</p>
+ </div>
+
+ <div class="comparison-visual">
+  <article><svg class="big-symbol"><use href="#i-bars"/></svg><h3>La revista</h3><p>Cuartil, categoría, año</p><span class="pill">Dónde está la revista</span></article>
+  <span class="not-equal" aria-label="no equivale a">≠</span>
+  <article><svg class="big-symbol"><use href="#i-eye"/></svg><h3>El artículo</h3><p>Diseño, sesgos, resultados</p><span class="pill">Qué tan bueno es el estudio</span></article>
+ </div>
+
+ <div class="mini-challenge">
+  <span class="pill">Decide</span>
+  <h3>Un artículo salió en una revista Q1. ¿Ya puedo confiar en su método?</h3>
+  <div class="quiz-options">
+   <button type="button" data-journal-answer="yes" class="secondary">Sí, Q1 lo garantiza</button>
+   <button type="button" data-journal-answer="no" class="secondary">No, igual tengo que evaluarlo</button>
+  </div>
+  <p id="journal-feedback" role="status">Elige una opción y te digo.</p>
+ </div>
+
+ <details>
+  <summary>JCR, SJR y Publindex: ¿son lo mismo?</summary>
+  <div class="classification-row">
+   <div><b>JCR</b><span>Usa indicadores como el JIF</span><small>Cuartil por categoría y año</small></div>
+   <div><b>SJR</b><span>Tiene su propia clasificación</span><small>Su Q1 no es el Q1 de JCR</small></div>
+   <div><b>Publindex</b><span>Clasifica en A1, A2, B y C</span><small>Depende de la convocatoria vigente</small></div>
+  </div>
+  <p>No. Son tres sistemas distintos y no se pueden traducir uno al otro. Si te piden el cuartil de una revista, pregunta siempre «¿según cuál?». Lo puedes consultar en <a href="https://jcr.clarivate.com/">JCR</a>, <a href="https://www.scimagojr.com/">SCImago</a> y <a href="https://scienti.minciencias.gov.co/publindex/">Publindex</a>.</p>
+ </details>
+ <details>
+  <summary>¿Cómo sé si una revista es seria?</summary>
+  <div class="editorial-checks"><span>ISSN e identidad clara</span><span>Revisión por pares explicada</span><span>Comité editorial con nombres reales</span><span>Tarifas publicadas</span><span>Política de correcciones y retractaciones</span><span>Indización que puedes comprobar</span></div>
+  <p>Tener DOI, ser de acceso abierto o cobrar por publicar no dice, por sí solo, nada sobre la calidad. Si tienes dudas, repasa la lista de <a href="https://thinkchecksubmit.org/">Think. Check. Submit.</a> Y lo contrario también aplica: no descartes un estudio porque la revista es Q4 o no tiene cuartil.</p>
+ </details>
+</section>
+
+<!-- PASO 3 -->
+<section id="calidad">
+ <p class="eyebrow"><span class="step-num">3</span> Sigue la pista del método</p>
+ <h2>Evaluación de la calidad metodológica</h2>
+ <p class="section-lead">Acá va una regla que repito mucho en clase: primero identificas el diseño del estudio y después eliges la herramienta para evaluarlo. No al revés. Elige un tipo de estudio y mira qué preguntas le harías.</p>
+ <div class="study-options" role="group" aria-label="Ejemplos de diseños">
+  <button type="button" data-study="trial" aria-pressed="true"><svg><use href="#i-shuffle"/></svg><b>Comparar intervenciones</b><small>Aulas sorteadas al azar</small></button>
+  <button type="button" data-study="observation" aria-pressed="false"><svg><use href="#i-eye"/></svg><b>Observar asociaciones</b><small>Exposición y resultado</small></button>
+  <button type="button" data-study="qualitative" aria-pressed="false"><svg><use href="#i-chat"/></svg><b>Comprender experiencias</b><small>Entrevistas a docentes</small></button>
+  <button type="button" data-study="mixed" aria-pressed="false"><svg><use href="#i-puzzle"/></svg><b>Integrar métodos</b><small>Números y relatos</small></button>
+ </div>
+ <div id="study-result" class="study-result" aria-live="polite"></div>
+ <details>
+  <summary>Ver todas las herramientas y en qué fijarte</summary>
+  <p>Cuando leas un estudio, hazte estas preguntas: ¿cómo eligieron a los participantes?, ¿cómo midieron la intervención o la exposición?, ¿qué pasó con los que abandonaron?, ¿el análisis responde la pregunta que plantearon? Un artículo puede estar muy bien escrito y aun así tener sesgos importantes.</p>
+  <div class="table-wrap"><table>
+   <thead><tr><th>Diseño</th><th>Herramienta que te sugiero</th><th>En qué fijarte</th></tr></thead>
+   <tbody>
+    <tr><td>Ensayo aleatorizado</td><td>RoB 2; PEDro en fisioterapia</td><td>Aleatorización, desviaciones de lo planeado, datos faltantes, medición y selección del resultado. PEDro es útil, pero no reemplaza a RoB 2.</td></tr>
+    <tr><td>Intervención no aleatorizada</td><td>ROBINS-I</td><td>Confusión, selección, clasificación y medición. Pide algo de entrenamiento antes de usarla.</td></tr>
+    <tr><td>Cohorte, casos y controles, transversal o prevalencia</td><td>La lista JBI de ese diseño</td><td>Muestreo, factores de confusión, medidas válidas y seguimiento cuando aplique.</td></tr>
+    <tr><td>Cualitativo</td><td>JBI cualitativo o CASP</td><td>Coherencia del método, reflexividad, voz de los participantes, análisis y ética.</td></tr>
+    <tr><td>Revisión sistemática</td><td>AMSTAR 2</td><td>Protocolo, búsqueda, selección, riesgo de sesgo y síntesis.</td></tr>
+    <tr><td>Conjunto de evidencia para un desenlace</td><td>GRADE</td><td>Mide la certeza del conjunto, no le pone nota a un artículo suelto.</td></tr>
+   </tbody>
+  </table></div>
+  <div class="callout">
+   <h3>Si tu estudio es de educación</h3>
+   <p>Pregúntate a quién asignaron: ¿estudiantes, aulas o colegios completos? Si sortearon aulas, el análisis tiene que tenerlo en cuenta. Mira también si los grupos empezaron parecidos, cuántos se retiraron, si un grupo pudo «contagiar» al otro, si la estrategia se aplicó como estaba planeada y si la prueba de aprendizaje mide lo que dice medir. Un antes y después sin grupo de comparación no te permite decir que la mejora se debe al programa.</p>
+   <p>En los cualitativos, fíjate en el contexto escolar, en cómo eligieron a los participantes y en si el investigador reconoce su propia mirada. En los mixtos, evalúa cada parte por separado y luego cómo se integran; para eso existe el <a href="http://mixedmethodsappraisaltoolpublic.pbworks.com/">MMAT</a>.</p>
+   <p>Para intervenciones educativas te van a servir los <a href="https://ies.ed.gov/ncee/wwc/Handbooks">manuales de What Works Clearinghouse</a> y los <a href="https://educationendowmentfoundation.org.uk/projects-and-evaluation/evaluation/eef-evaluation-reports-and-research-papers/">recursos de la EEF</a>.</p>
+  </div>
+  <p class="tip"><span class="note-label">Error frecuente</span>CONSORT, STROBE, COREQ y PRISMA no sirven para evaluar calidad. Son guías para reportar: te dicen qué debe contar un artículo, no si el estudio está bien hecho. Tampoco sumes los «sí» de una lista para sacar una nota final. Escribe tu juicio en cada dominio y explica por qué.</p>
+  <p>Recursos: <a href="https://www.riskofbias.info/">RoB 2 y ROBINS-I</a> · <a href="https://jbi.global/critical-appraisal-tools">JBI</a> · <a href="https://casp-uk.net/casp-tools-checklists/">CASP</a> · <a href="https://amstar.ca/Amstar-2.php">AMSTAR 2</a> · <a href="https://www.gradeworkinggroup.org/">GRADE</a></p>
+ </details>
+</section>
+
+<!-- PASO 4 -->
+<section id="pregunta">
+ <p class="eyebrow"><span class="step-num">4</span> Escoge una estrategia</p>
+ <h2>Estrategias para formular la pregunta</h2>
+ <p class="section-lead">Una buena búsqueda empieza con una buena pregunta. Estos marcos son plantillas que te obligan a pensar en las piezas: quiénes, qué, frente a qué, para qué. No tienes que meter todas las piezas en la cadena, y el marco que elijas no define el diseño de los estudios.</p>
+ <div class="domain-picker">
+  <label for="domain">¿De qué área quieres ver los ejemplos?</label>
+  <select id="domain">
+   <option value="education">Educación: aprendizaje, docencia e inclusión</option>
+   <option value="health">Salud: intervención, rehabilitación y experiencias</option>
+  </select>
+  <p class="small">Si cambias de área o de estrategia, los campos del constructor se vacían. Descarga tu ficha antes si no quieres perder lo que escribiste.</p>
+ </div>
+ <div id="framework-cards" class="cards"></div>
+</section>
+
+<!-- PASO 5 -->
+<section id="cadena">
+ <p class="eyebrow"><span class="step-num">5</span> De conceptos a términos</p>
+ <h2>Construcción de cadenas de búsqueda</h2>
+ <p class="section-lead">Una cadena es tu pregunta traducida al idioma de la base de datos. Casi todo se resuelve con dos operadores. Prueba cada uno y mira qué zona del dibujo se ilumina.</p>
+ <div class="boolean-lab">
+  <div>
+   <p class="eyebrow">Laboratorio de operadores</p>
+   <h3>OR y AND</h3>
+   <div class="operator-buttons" role="group" aria-label="Operador booleano">
+    <button type="button" data-operator="OR" aria-pressed="true">OR · suma</button>
+    <button type="button" data-operator="AND" aria-pressed="false">AND · filtra</button>
+   </div>
+   <p id="operator-explanation" aria-live="polite"></p>
+  </div>
+  <div>
+   <svg class="venn" viewBox="0 0 320 210" role="img" aria-label="Conjuntos A y B: la zona seleccionada cambia según el operador"><defs><clipPath id="clip-a"><circle cx="120" cy="100" r="75"/></clipPath></defs><circle class="set-a" cx="120" cy="100" r="75"/><circle class="set-b" cx="205" cy="100" r="75"/><circle class="set-overlap" cx="205" cy="100" r="75" clip-path="url(#clip-a)"/><text x="83" y="105">A</text><text x="232" y="105">B</text></svg>
+   <div id="operator-query" class="operator-query"></div>
+  </div>
+ </div>
+ <details>
+  <summary>Los seis pasos que sigo para armar y probar una cadena</summary>
+  <ol class="tutorial">
+   <li><strong>Separa los conceptos.</strong> Toma tu pregunta y sácale las ideas centrales: «estudiantes universitarios» y «aprendizaje basado en problemas», o «dolor lumbar» y «ejercicio». Para cada idea, anota sinónimos, variantes de escritura y cómo se dice en inglés, español o portugués.</li>
+   <li><strong>Usa texto libre y tesauro.</strong> El texto libre son las palabras como las escriben los autores. El tesauro es el vocabulario oficial de la base: <a href="https://www.ncbi.nlm.nih.gov/mesh/">MeSH</a>, <a href="https://decs.bvsalud.org/">DeCS</a>, el <a href="https://eric.ed.gov/?ti=all">tesauro de ERIC</a> o Emtree. Busca el descriptor en el tesauro; no lo inventes traduciendo.</li>
+   <li><strong>OR adentro, AND afuera.</strong> Los sinónimos de una misma idea van unidos con OR dentro de un paréntesis, y los paréntesis se cruzan con AND. Así: ("university students" OR "college students") AND ("formative assessment" OR "assessment for learning").</li>
+   <li><strong>Adapta la cadena a cada base.</strong> PubMed entiende [tiab] y [Mesh]; Scopus usa TITLE-ABS-KEY; Web of Science, TS. En ERIC trabaja con su tesauro y la búsqueda avanzada. Si copias y pegas la misma cadena en todas, alguna te va a fallar sin avisarte.</li>
+   <li><strong>Pruébala.</strong> Piensa en dos o tres artículos que ya sabes que deberían aparecer. Si tu cadena no los encuentra, algo le falta. Anota cada cambio que hagas. Y evita NOT salvo que tengas una razón muy clara: es fácil que elimine estudios que sí te servían.</li>
+   <li><strong>No limites por comodidad.</strong> Filtrar por «texto completo gratis», por idioma o por fecha porque sí introduce sesgos. Si vas a limitar, que sea porque tu protocolo lo justifica.</li>
+  </ol>
+ </details>
+
+ <div id="constructor" class="builder">
+  <p class="eyebrow">Tu turno</p>
+  <h2>Constructor de cadenas</h2>
+  <p>Escribe un término por línea, o sepáralos con punto y coma. Solo las palabras: sin comillas, sin AND ni OR, sin etiquetas. De eso me encargo yo: uno con OR los términos de cada bloque y con AND los bloques que marques.</p>
+  <div class="two">
+   <div><label for="framework">Estrategia de pregunta</label><select id="framework"></select></div>
+   <div><label for="engine">¿Dónde la vas a usar?</label><select id="engine"><option value="generic">Formato general (lo adaptas tú)</option><option value="pubmed">PubMed: texto libre + MeSH</option><option value="scopus">Scopus: TITLE-ABS-KEY</option><option value="wos">Web of Science: TS</option></select></div>
+  </div>
+  <p id="question-example" class="callout"></p>
+  <div class="actions"><button id="example" type="button">Cargar el ejemplo</button><button id="clear" type="button" class="secondary">Vaciar campos</button></div>
+  <div id="fields"></div>
+  <p class="small">Los bloques sin marcar te ayudan a pensar la pregunta, pero no entran en la cadena. Fíjate que, en el ejemplo, la comparación y el desenlace vienen desmarcados: si los metes, la búsqueda se vuelve más estrecha y puedes perder estudios. Los campos MeSH solo aparecen en el formato de PubMed.</p>
+  <p id="validation" role="status"></p>
+  <label for="output">Tu cadena</label>
+  <textarea id="output" rows="5" readonly></textarea>
+  <div class="actions"><button id="copy" type="button">Copiar cadena</button><a id="eric-link" class="button secondary" target="_blank" rel="noopener" hidden>Probar en ERIC ↗</a><a id="pubmed-link" class="button secondary" target="_blank" rel="noopener" hidden>Probar en PubMed ↗</a></div>
+  <p id="copy-status" role="status" class="small"></p>
+  <p class="tip"><span class="note-label">Antes de usarla</span>Lo que sale aquí es un primer borrador, no una estrategia validada. Revisa los MeSH en el tesauro, pruébala en la base y ajústala. El formato general no funciona igual en todas partes: PEDro, BVS y otras interfaces necesitan cambios. Esta herramienta no traduce, no aplica filtros de diseño y no se conecta a ninguna base.</p>
+
+  <h3>Ficha para repetir tu búsqueda</h3>
+  <p>Una búsqueda que no puedes repetir no sirve para un trabajo científico. Llena esto el día que la ejecutes.</p>
+  <div class="two">
+   <div><label for="research-question">Tu pregunta completa</label><textarea id="research-question" rows="2"></textarea></div>
+   <div><label for="database">Base y plataforma</label><input id="database" placeholder="Ej.: ERIC en eric.ed.gov, o MEDLINE en PubMed"></div>
+   <div><label for="search-date">Fecha en que la ejecutaste</label><input type="date" id="search-date"></div>
+   <div><label for="hits">Registros que salieron</label><input id="hits" type="number" min="0" step="1"></div>
+  </div>
+  <label for="limits">Límites, filtros, ajustes y notas</label>
+  <textarea id="limits" rows="2" placeholder="Si limitaste por fecha o idioma, explica por qué. Anota también las pruebas y los cambios."></textarea>
+  <button id="download" type="button">Descargar ficha (.txt)</button>
+  <p class="small">La ficha se arma con lo que escribiste aquí y no se guarda en ningún servidor. Si recargas la página, se pierde: descárgala antes.</p>
+ </div>
+</section>
+
+<!-- PASO 6 -->
+<section id="seleccion">
+ <p class="eyebrow"><span class="step-num">6</span> De los resultados a los estudios incluidos</p>
+ <h2>Selección de artículos científicos</h2>
+ <p class="section-lead">Tu búsqueda trajo 120 resultados. ¿Cómo llegas a los diez que de verdad responden tu pregunta? Haz clic en cada etapa. Los números son inventados, pero el recorrido es real.</p>
+ <div class="selection-flow" role="group" aria-label="Etapas de selección">
+  <button type="button" data-selection="0" aria-pressed="true"><strong>120</strong><b>Identificar</b><small>Registros encontrados</small></button><span aria-hidden="true">→</span>
+  <button type="button" data-selection="1" aria-pressed="false"><strong>100</strong><b>Depurar</b><small>Quitamos 20 duplicados</small></button><span aria-hidden="true">→</span>
+  <button type="button" data-selection="2" aria-pressed="false"><strong>25</strong><b>Leer completos</b><small>75 no pasaron el cribado</small></button><span aria-hidden="true">→</span>
+  <button type="button" data-selection="3" aria-pressed="false"><strong>10</strong><b>Incluir</b><small>15 excluidos con razón</small></button>
+ </div>
+ <div id="selection-explanation" class="source-answer" aria-live="polite"></div>
+ <p class="small">Simplifiqué el ejemplo: supuse que conseguimos todos los textos y que cada artículo es un estudio distinto. En una revisión real tienes que separar registros, informes y estudios, y reportar los textos que no pudiste conseguir.</p>
+ <details>
+  <summary>El procedimiento completo, paso a paso</summary>
+  <ol class="tutorial">
+   <li><strong>Escribe los criterios antes de empezar.</strong> Población, intervención o fenómeno, contexto, diseños y límites. Ponlo por escrito: qué entra y qué no. Si decides sobre la marcha, terminas eligiendo los estudios que te gustan.</li>
+   <li><strong>Exporta y quita duplicados.</strong> Usa RIS, BibTeX o el formato que te dé la base. Zotero te ayuda a organizar. Antes de borrar un duplicado, comprueba DOI, título, autores y año.</li>
+   <li><strong>Lee títulos y resúmenes.</strong> En una revisión sistemática, dos personas lo hacen por separado y luego resuelven los desacuerdos. Prueben los criterios con unos pocos artículos primero. Si dudas, deja pasar el artículo a la siguiente etapa.</li>
+   <li><strong>Consigue y lee los textos completos.</strong> Separa los que no pudiste conseguir de los que excluiste. Para cada exclusión, anota una razón principal que otra persona pueda comprobar.</li>
+   <li><strong>No cuentes dos veces el mismo estudio.</strong> A veces un estudio sale en varios artículos. Agrúpalos para no duplicar participantes, y revisa si alguno tiene correcciones o fue retractado.</li>
+   <li><strong>Evalúa y extrae.</strong> Usa la herramienta que corresponde al diseño (paso 3). No excluyas a última hora por una puntuación que te inventaste. Extrae los datos con una ficha que hayas probado antes.</li>
+   <li><strong>Cuenta lo que hiciste.</strong> Guarda cuántos registros, duplicados, cribados, textos completos e incluidos tuviste. Usa el diagrama de flujo PRISMA cuando corresponda y documenta si actualizaste la búsqueda.</li>
+  </ol>
+ </details>
+ <details>
+  <summary>Ejemplo en educación: evaluación formativa</summary>
+  <p>Incluyo estudiantes de secundaria, estrategias de evaluación formativa comparadas con la evaluación habitual y los diseños que puse en el protocolo. Defino antes el nivel educativo, las materias, la duración, cómo se mide el aprendizaje y el contexto. Separo los aleatorizados de los cuasiexperimentales. No excluyo un estudio porque no encontró diferencias. Las tesis y los informes técnicos entran o salen según los criterios, no por no tener cuartil.</p>
+ </details>
+ <details>
+  <summary>Ejemplo en salud: ejercicio y dolor lumbar</summary>
+  <p>Incluyo adultos con dolor lumbar crónico y ensayos aleatorizados de ejercicio frente a la atención habitual. Excluyo dolor agudo y pacientes posquirúrgicos, si así lo dice el protocolo. Antes de cribar, dejo definido cuánto tiempo cuenta como crónico, qué ejercicios son elegibles, qué comparadores acepto y qué mediciones. Y no excluyo un estudio porque su resultado no fue estadísticamente significativo.</p>
+ </details>
+ <div class="callout checklist-box">
+  <strong>Antes de dar por cerrada tu búsqueda, revisa:</strong>
+  <div id="checklist"></div>
+  <div class="progress-bar" aria-hidden="true"><span></span></div>
+  <p id="progress" aria-live="polite"></p>
+ </div>
+ <p class="next-links"><a href="../revisiones/">Seguir con la guía de revisiones sistemáticas →</a> <a href="../brujula/">Revisar mi pregunta en la Brújula →</a></p>
+</section>
+
+<section id="fuentes">
+ <p class="eyebrow">Para profundizar</p>
+ <h2>Fuentes y manuales</h2>
+ <p>Revisé este material el 21 de octubre de 2026. Los manuales se actualizan, así que consulta siempre la versión vigente y la ayuda de cada plataforma.</p>
+ <ul class="sources">
+  <li><a href="https://eric.ed.gov/">ERIC: colección, tesauro y ayuda de búsqueda</a>. Investigación educativa y vocabulario controlado.</li>
+  <li><a href="https://ies.ed.gov/ncee/wwc/Handbooks">What Works Clearinghouse: manuales</a>. Cómo se evalúa la evidencia en educación.</li>
+  <li><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04">Cochrane Handbook, capítulo 4</a>. Diseño de búsquedas, fuentes y documentación.</li>
+  <li><a href="https://pubmed.ncbi.nlm.nih.gov/help/">Ayuda oficial de PubMed</a>. Operadores, campos, frases y MeSH.</li>
+  <li><a href="https://jbi-global-wiki.refined.site/space/MANUAL">JBI Manual for Evidence Synthesis</a>. Marcos de pregunta y tipos de revisión.</li>
+  <li><a href="https://pubmed.ncbi.nlm.nih.gov/22829486/">Cooke, Smith y Booth (2012), Beyond PICO: SPIDER</a>. La propuesta original para síntesis cualitativa.</li>
+  <li><a href="https://jbi.global/critical-appraisal-tools">JBI: herramientas de evaluación crítica</a>. Listas por diseño.</li>
+  <li><a href="https://www.prisma-statement.org/prisma-2020">PRISMA 2020</a> y <a href="https://www.prisma-statement.org/prisma-search">PRISMA-S</a>. Cómo reportar la selección y las búsquedas.</li>
+  <li><a href="https://sfdora.org/read/">Declaración DORA</a>. Por qué no se debe juzgar un trabajo por la revista donde salió.</li>
+ </ul>
+</section>
+</main>
+
+<footer>
+ <div class="wrap foot">
+  <span><img class="avatar-sm" src="../assets/perfil.jpg" width="32" height="32" alt="" decoding="async"> Búsquedas científicas · Ft. Diego Fernando Afanador Restrepo</span>
+  <a href="../index.html">Volver al inicio ↑</a>
+ </div>
+</footer>
+</body>
+</html>

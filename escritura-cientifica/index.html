@@ -1,0 +1,1269 @@
+<!doctype html><html lang="es" data-page="escritura"><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,400..700&display=swap"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Herramienta de Escritura Científica que articula la anatomía del artículo con recetas, ejemplos y mesas de trabajo para construir y revisar un manuscrito."><link rel="icon" href="../favicon.svg" type="image/svg+xml"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="stylesheet" href="../assets/sitio.css">
+<script defer src="../assets/sitio.js"></script>
+</head><body>
+<title>Escritura Científica | Anatomía y recetario</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+
+
+<style>
+/* Layout: una columna de lectura con barra de secciones fija; cada receta es una ficha con ingredientes, preparación, punto y errores, seguida de su diagrama y de una mesa de trabajo. */
+:root{
+  --bg:#FFFFFF; --surface:#F3F5FB; --ink:#141A4D; --muted:#4F5780; --line:#DCE1EF;
+  --basil:#001282; --basil-mid:#16A8E1; --basil-soft:#E8ECF8;
+  --yolk:#EC6C1F; --yolk-soft:#FDF1DA; --tomato:#AD0000; --tomato-soft:#FBEAEA;
+  --display:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --body:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0;letter-spacing:-0.01em}
+h2{font-size:clamp(1.9rem,4.4vw,2.6rem);font-weight:800}
+h3{font-size:1.3rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+p{margin:0}
+.prose{display:grid;gap:1rem;max-width:65ch}
+a{color:var(--basil);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--yolk);outline-offset:2px}
+.label{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* Barra de secciones */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:1.2rem;padding-block:.6rem}
+.brand{font-family:var(--display);font-weight:800;font-size:1rem;white-space:nowrap}
+.bar nav{display:flex;gap:.3rem;overflow-x:auto;scrollbar-width:none;min-width:0}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav a{font-family:var(--mono);font-size:.76rem;text-decoration:none;color:var(--muted);padding:.35rem .6rem;border-radius:99px;white-space:nowrap}
+.bar nav a:hover{background:var(--basil-soft);color:var(--ink)}
+
+/* Apertura */
+header.hero .wrap{padding-block:3.2rem 2.4rem;display:grid;gap:1.4rem}
+.hero h1{font-size:clamp(2.6rem,7.5vw,4.6rem);font-weight:800;letter-spacing:-.025em}
+.hero h1 span{color:var(--basil)}
+.premise{font-size:1.18rem;line-height:1.6;max-width:62ch;display:grid;gap:.9rem}
+.premise p:first-child::first-letter{font:inherit;color:inherit;float:none;font-size:inherit;line-height:inherit;padding:0}
+.byline{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{font-family:var(--mono);font-size:.75rem;border:1px solid var(--line);border-radius:99px;padding:.2rem .7rem;color:var(--muted);background:var(--surface)}
+
+section.course{border-top:1px solid var(--line)}
+section.course>.wrap{padding-block:3rem;display:grid;gap:1.8rem}
+.course-head{display:grid;gap:.6rem}
+.course-head .num{font-family:var(--mono);font-size:.8rem;color:var(--basil)}
+.lead{font-size:1.1rem;max-width:62ch}
+
+/* Ficha de receta */
+.recipe{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.recipe-top{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;padding:.9rem 1.2rem;border-bottom:1px dashed var(--line);background:var(--basil-soft)}
+.recipe-top div{display:grid;gap:.05rem}
+.recipe-top strong{font-family:var(--display);font-size:.98rem}
+.recipe-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr)}
+.recipe-body>div{padding:1.2rem;display:grid;gap:.7rem;align-content:start;min-width:0}
+.recipe-body>div+div{border-left:1px dashed var(--line)}
+.recipe ul,.recipe ol{margin:0;padding-left:1.2rem;display:grid;gap:.45rem}
+.recipe li::marker{color:var(--basil);font-family:var(--mono);font-size:.85em}
+.recipe-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1px dashed var(--line)}
+.recipe-foot>div{padding:1.1rem 1.2rem;display:grid;gap:.5rem;align-content:start;min-width:0}
+.recipe-foot>div+div{border-left:1px dashed var(--line)}
+.ready{background:var(--yolk-soft)}
+.burnt{background:var(--tomato-soft)}
+.ready .label{color:var(--yolk)}
+.burnt .label{color:var(--tomato)}
+@media (max-width:680px){
+  .recipe-body,.recipe-foot{grid-template-columns:1fr}
+  .recipe-body>div+div,.recipe-foot>div+div{border-left:0;border-top:1px dashed var(--line)}
+}
+
+/* Figuras */
+figure{margin:0;display:grid;gap:.7rem}
+.fig-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem;overflow-x:auto}
+.fig-box svg{display:block;width:100%;height:auto;min-width:560px;max-width:100%;color:var(--ink);font-family:var(--display)}
+@media (min-width:600px){.fig-box svg{min-width:0}}
+figcaption{font-size:.92rem;color:var(--muted);max-width:65ch}
+figcaption b{color:var(--ink);font-family:var(--display)}
+.s-line{stroke:currentColor;fill:none;stroke-width:1.4}
+.s-faint{stroke:var(--line);fill:none;stroke-width:1.4}
+.s-dash{stroke:var(--muted);fill:none;stroke-width:1.2;stroke-dasharray:4 4}
+.f-surface{fill:var(--surface)}
+.f-soft{fill:var(--basil-soft)}
+.f-mid{fill:var(--basil-mid)}
+.f-basil{fill:var(--basil)}
+.f-yolk{fill:var(--yolk-soft)}
+.st-basil{stroke:var(--basil);stroke-width:1.5}
+.st-line{stroke:var(--line);stroke-width:1.2}
+.t-ink{fill:var(--ink)}
+.t-muted{fill:var(--muted)}
+.t-on{fill:var(--bg)}
+.t-basil{fill:var(--basil)}
+.ar{fill:currentColor}
+
+/* Ejemplo anotado */
+.annot{display:grid;gap:0;border-left:3px solid var(--basil-mid)}
+.annot>div{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:1rem;padding:.75rem 0 .75rem 1rem}
+.annot>div+div{border-top:1px solid var(--line)}
+.annot .label{padding-top:.2rem}
+@media (max-width:560px){.annot>div{grid-template-columns:1fr;gap:.2rem}}
+
+/* Atajos de metodología */
+.filters{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{font-family:var(--mono);font-size:.78rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.4rem .8rem;border-radius:99px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--basil);border-color:var(--basil);color:var(--bg)}
+.methods{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem;display:grid;gap:.55rem;align-content:start}
+.mcard h4{font-size:1rem}
+.mcard .guide{font-family:var(--mono);font-size:.72rem;color:var(--basil);border:1px solid var(--basil-mid);border-radius:6px;padding:.1rem .45rem;justify-self:start}
+.mcard ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.mcard li{font-size:.88rem;line-height:1.45}
+.mcard li a{text-decoration:none;color:var(--ink)}
+.mcard li a:hover{color:var(--basil);text-decoration:underline}
+.mcard li small{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.mcard.external{background:transparent;border-style:dashed}
+.mcard.external p{font-size:.88rem;color:var(--muted)}
+
+/* Tabla */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.9rem;line-height:1.45}
+th,td{padding:.7rem .85rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td:first-child{font-family:var(--display);font-weight:700}
+
+/* Anatomía del párrafo */
+.steps{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;font-family:var(--display);font-size:.95rem}
+.steps .arrow{color:var(--muted);font-family:var(--mono)}
+
+.note{background:var(--yolk-soft);border-radius:12px;padding:1rem 1.2rem;display:grid;gap:.4rem;max-width:70ch}
+.note .label{color:var(--yolk)}
+
+/* Mesa de trabajo */
+.bench{background:var(--surface);border:1px solid var(--basil-mid);border-radius:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.bench-in,.bench-out{padding:1.2rem;display:grid;gap:.8rem;align-content:start;min-width:0}
+.bench-out{background:var(--basil-soft);border-left:1px solid var(--basil-mid);border-radius:0 14px 14px 0}
+@media (max-width:720px){.bench{grid-template-columns:1fr}.bench-out{border-left:0;border-top:1px solid var(--basil-mid);border-radius:0 0 14px 14px}}
+.bench label{display:grid;gap:.3rem;font-family:var(--display);font-size:.9rem;font-weight:700}
+.bench label span{font-family:var(--body);font-weight:400;font-size:.82rem;color:var(--muted)}
+.bench input,.bench textarea{font:inherit;font-family:var(--body);font-size:.92rem;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.55rem .7rem;width:100%}
+.bench textarea{min-height:4.6rem;resize:vertical;line-height:1.5}
+.bench-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem}
+.btns{display:flex;gap:.5rem;flex-wrap:wrap}
+button{font-family:var(--mono);font-size:.78rem;border-radius:8px;padding:.5rem .85rem;cursor:pointer;min-height:40px;border:1px solid var(--basil);background:var(--basil);color:var(--bg)}
+button.ghost{background:transparent;color:var(--basil)}
+.plan{list-style:none;margin:0;padding:0;display:grid;gap:.7rem;counter-reset:p}
+.plan li{background:var(--surface);border-radius:10px;padding:.7rem .85rem;display:grid;gap:.15rem;font-size:.9rem;line-height:1.5}
+.plan li b{font-family:var(--display);font-size:.92rem}
+.plan li em{color:var(--muted)}
+.status{font-family:var(--mono);font-size:.74rem;color:var(--basil);min-height:1.2em}
+.example-flag{font-family:var(--mono);font-size:.7rem;background:var(--yolk-soft);color:var(--yolk);border-radius:6px;padding:.15rem .5rem}
+
+/* Orden de escritura */
+.order{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;counter-reset:o}
+.order li{counter-increment:o;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.8rem;display:grid;gap:.3rem;align-content:start}
+.order li::before{content:counter(o);font-family:var(--mono);font-size:.78rem;color:var(--basil)}
+.order li b{font-family:var(--display)}
+.order li span{font-size:.84rem;color:var(--muted);line-height:1.45}
+
+footer .wrap{padding-block:2.4rem 3rem;border-top:1px solid var(--line);display:grid;gap:.5rem;color:var(--muted);font-size:.88rem}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+
+/* Senaletica institucional: placas azules, acento rojo y tipografia unificada. */
+.bar{background:#001282;color:#fff;border-bottom:3px solid #AD0000}
+.bar .brand,.bar nav a{color:#fff}
+.bar nav a:hover,.bar nav a:focus-visible{background:#002A9E;color:#fff}
+.hero{border-bottom:4px solid #AD0000}
+:focus-visible{outline:3px solid #EC6C1F;outline-offset:3px}
+</style>
+
+<div class="bar">
+  <div class="wrap">
+    <span class="brand"><img class="perfil-mini" src="../assets/perfil.jpg" width="32" height="32" alt="" decoding="async">Escritura Científica</span>
+    <nav aria-label="Secciones">
+      <a href="#premisa">Premisa</a>
+      <a href="#estructura">Estructura</a>
+      <a href="#anatomia">Anatomía</a>
+      <a href="#introduccion">Introducción</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#discusion">Discusión</a>
+      <a href="#emplatado">Emplatado</a>
+      <a href="../index.html" aria-label="Volver a la página personal">Página personal ↗</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="premisa">
+  <div class="wrap">
+    <p class="label">Acompañamiento para la escritura de artículos cuantitativos</p>
+    <h1>Recetario de escritura <span>científica</span></h1>
+    <div class="premise">
+      <p>Cuando uno empieza a cocinar, hasta lo más sencillo es un reto. Fritar un huevo, preparar un café o picar un tomate exigen atención en cada paso. Con la investigación pasa algo parecido. Seleccionar una fuente, escoger la metodología o decidir qué gráfico usar parecen tareas imposibles al principio, y con la práctica se terminan haciendo casi con los ojos cerrados.</p>
+      <p>Este recetario parte de esa idea. La mejor manera de escribir un artículo es tomar como referente uno parecido, publicado en la revista a la que lo vas a enviar. Aun así, la estructura base casi siempre es la misma, y eso permite trabajar con recetas. Cada sección del artículo tiene la suya, con sus ingredientes, su preparación, la forma de saber si quedó bien y los errores que la arruinan.</p>
+    </div>
+    <div class="tags">
+      <span class="tag">Enfoque cuantitativo</span>
+      <span class="tag">Estructura IMRyD</span>
+      <span class="tag">Con mesas de trabajo para tu borrador</span>
+    </div>
+  </div>
+</header>
+
+<section class="course" id="estructura">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Antes de cocinar</span>
+      <h2>La forma del plato</h2>
+      <p class="lead">Casi todos los artículos cuantitativos siguen la estructura IMRyD, que reúne introducción, métodos, resultados y discusión. Lo que cambia entre revistas son los detalles (extensión, subtítulos, número de tablas), y por eso conviene tener a mano un artículo publicado en la revista elegida.</p>
+    </div>
+
+    <figure>
+      <div class="fig-box">
+        <svg viewBox="0 0 800 390" role="img" aria-label="Diagrama de reloj de arena. La introducción se estrecha de lo general al objetivo, métodos y resultados forman el cuello angosto y la discusión se abre del hallazgo hacia su significado.">
+          <defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker></defs>
+          <polygon points="160,20 560,20 420,110 300,110" class="f-soft st-basil"/>
+          <text x="360" y="60" text-anchor="middle" font-size="17" font-weight="700" class="t-ink">Introducción</text>
+          <text x="360" y="80" text-anchor="middle" font-size="12" class="t-muted">contexto, variables, antecedentes</text>
+          <rect x="300" y="125" width="120" height="60" rx="6" class="f-mid st-basil"/>
+          <text x="360" y="160" text-anchor="middle" font-size="15" font-weight="700" class="t-ink">Métodos</text>
+          <rect x="300" y="200" width="120" height="60" rx="6" class="f-mid st-basil"/>
+          <text x="360" y="235" text-anchor="middle" font-size="15" font-weight="700" class="t-ink">Resultados</text>
+          <polygon points="300,275 420,275 560,370 160,370" class="f-soft st-basil"/>
+          <text x="360" y="332" text-anchor="middle" font-size="17" font-weight="700" class="t-ink">Discusión</text>
+          <text x="360" y="352" text-anchor="middle" font-size="12" class="t-muted">hallazgos, comparación, límites</text>
+          <line x1="496" y1="65" x2="584" y2="65" class="s-dash"/>
+          <text x="592" y="61" font-size="13" font-weight="700" class="t-ink">De lo general</text>
+          <text x="592" y="77" font-size="13" class="t-muted">al objetivo del estudio</text>
+          <line x1="426" y1="155" x2="584" y2="155" class="s-dash"/>
+          <text x="592" y="151" font-size="13" font-weight="700" class="t-ink">Lo que hiciste</text>
+          <text x="592" y="167" font-size="13" class="t-muted">con detalle para replicarlo</text>
+          <line x1="426" y1="230" x2="584" y2="230" class="s-dash"/>
+          <text x="592" y="226" font-size="13" font-weight="700" class="t-ink">Lo que encontraste</text>
+          <text x="592" y="242" font-size="13" class="t-muted">en el orden de los objetivos</text>
+          <line x1="504" y1="328" x2="584" y2="328" class="s-dash"/>
+          <text x="592" y="324" font-size="13" font-weight="700" class="t-ink">Del hallazgo</text>
+          <text x="592" y="340" font-size="13" class="t-muted">a lo que significa</text>
+          <line x1="110" y1="24" x2="110" y2="364" class="s-line" marker-end="url(#ah1)"/>
+          <text x="96" y="194" font-size="12" text-anchor="middle" class="t-muted" transform="rotate(-90 96 194)">sentido de lectura</text>
+        </svg>
+      </div>
+      <figcaption><b>El reloj de arena.</b> La introducción va estrechando el tema hasta el objetivo, métodos y resultados se concentran en lo que hiciste y encontraste, y la discusión vuelve a abrirse para darle sentido a los hallazgos.</figcaption>
+    </figure>
+
+    <div class="note">
+      <span class="label">Un consejo de cocina</span>
+      <p>Busca dos o tres artículos recientes de la revista a la que piensas enviar tu trabajo, idealmente con un diseño parecido al tuyo. Mira cuántos párrafos tiene la introducción, qué subtítulos usa la metodología y cómo presentan las tablas. Esa es la receta local, y las recetas de este recetario se ajustan a ella.</p>
+    </div>
+  </div>
+</section>
+
+<section class="course" id="anatomia">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">La receta completa en una página</span>
+      <h2>Anatomía de un artículo científico</h2>
+      <p class="lead">Esta infografía reúne en un solo lugar qué va en cada sección, el lenguaje que conviene usar, cómo citar y el hilo que conecta la pregunta con la conclusión. Úsala como lista de verificación antes de enviar tu manuscrito.</p>
+    </div>
+  </div>
+  <div class="wrap" style="max-width:1240px;padding-block:0 3rem">
+<style>
+.anat{--an-ink:#141A4D;--an-muted:#4F5780;--an-paper:#FFFFFF;--an-ground:#F3F5FB;--an-navy:#001282;--an-brown:#AD0000;
+  --c1:#0051C6;--c1s:#EFF4FC;--c2:#16A8E1;--c2s:#EAF7FC;--c3:#249337;--c3s:#E3F2E6;--c4:#EC6C1F;--c4s:#FDF1DA;--c5:#4C19AF;--c5s:#F1EEF8;--c6:#AD0000;--c6s:#FBEAEA;
+  background:var(--an-ground);color:var(--an-ink);font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:15.5px;line-height:1.45;
+  border-radius:20px;padding:40px 36px 28px;display:grid;gap:26px;color-scheme:light;-webkit-font-smoothing:antialiased}
+.anat *{box-sizing:border-box}
+.anat h2,.anat h3,.anat h4,.anat p,.anat ul,.anat ol{margin:0;padding:0}
+.anat ul,.anat ol{list-style:none}
+.anat .an-disp{font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.anat svg.an-i{width:1em;height:1em;flex:none;stroke-width:1.8}
+.an-title{text-align:center;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,50px);line-height:1.05;letter-spacing:-.015em;color:var(--an-navy);text-transform:uppercase;text-wrap:balance}
+.an-grid{display:grid;grid-template-columns:280px minmax(0,1fr) 220px;grid-template-areas:"left center right";gap:22px;align-items:start}
+.an-left{grid-area:left}.an-center{grid-area:center}.an-right{grid-area:right}
+.an-side{background:var(--an-paper);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(27,36,51,.06),0 0 0 1px rgba(27,36,51,.08)}
+.an-sidehead{color:#fff;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.04em;text-align:center;padding:16px 14px;line-height:1.2}
+.an-left .an-sidehead{background:var(--an-navy)}
+.an-right .an-sidehead{background:var(--an-brown)}
+.an-block{padding:16px 16px 18px;display:grid;gap:12px}
+.an-block+.an-block{border-top:1px solid #E3E8F0}
+.an-blockhead{display:flex;align-items:center;gap:10px;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:700;font-size:13.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--an-navy)}
+.an-blockhead span.an-ic{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--an-navy);display:grid;place-items:center;font-size:18px}
+.an-dots{display:grid;gap:9px;font-size:14px;line-height:1.42}
+.an-dots li{position:relative;padding-left:14px}
+.an-dots li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55}
+.an-dots b{font-weight:700}
+.an-dots i{font-style:italic}
+
+.anat .an-steps{display:grid;gap:16px;position:relative;padding-left:58px}
+.an-steps::before{content:"";position:absolute;left:21px;top:22px;bottom:22px;width:3px;border-radius:2px;background:linear-gradient(var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6))}
+.an-step{--c:var(--c1);--cs:var(--c1s);position:relative;background:var(--cs);border:1.5px solid var(--c);border-radius:14px;padding:18px 20px;display:grid;gap:14px}
+.an-step:nth-child(2){--c:var(--c2);--cs:var(--c2s)}.an-step:nth-child(3){--c:var(--c3);--cs:var(--c3s)}.an-step:nth-child(4){--c:var(--c4);--cs:var(--c4s)}.an-step:nth-child(5){--c:var(--c5);--cs:var(--c5s)}.an-step:nth-child(6){--c:var(--c6);--cs:var(--c6s)}
+.an-num{position:absolute;left:-58px;top:14px;width:45px;height:45px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:22px;box-shadow:0 0 0 4px var(--an-ground)}
+.an-stephead{display:flex;align-items:center;gap:14px}
+.an-stephead .an-ic{width:52px;height:52px;border-radius:12px;background:var(--an-paper);border:1.5px solid var(--c);color:var(--c);display:grid;place-items:center;font-size:28px;flex:none}
+.an-stephead h3{font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:19px;line-height:1.15;text-transform:uppercase;color:var(--c);letter-spacing:.01em}
+.an-stephead h3 small{display:block;font-size:14px;font-weight:700;color:var(--an-ink);opacity:.8;margin-top:3px}
+.an-two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+.an-two.even{grid-template-columns:1fr 1fr}
+.an-step .an-dots{font-size:14.5px}
+.an-step .an-dots li::before{background:var(--c);opacity:1}
+.an-box{background:var(--an-paper);border-radius:10px;padding:12px 14px;display:grid;gap:8px;border:1px solid rgba(27,36,51,.1)}
+.an-box h4{display:flex;align-items:center;gap:8px;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.03em;color:var(--an-ink)}
+.an-box h4 svg{font-size:18px}
+.an-box.warn{border:1.5px dashed var(--c)}
+.an-box.warn h4{color:var(--c)}
+.an-strip{background:var(--an-paper);border-radius:10px;padding:10px 14px;font-weight:700;font-size:14.5px;display:flex;gap:10px;align-items:center;border:1px solid rgba(27,36,51,.1)}
+.an-strip svg{color:var(--c);font-size:20px}
+.an-pill{display:inline-block;background:var(--c);color:#fff;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:5px 11px;border-radius:6px;margin-bottom:10px}
+.an-pill.line{background:transparent;color:var(--c);box-shadow:inset 0 0 0 1.5px var(--c)}
+.an-nums{display:grid;gap:8px;font-size:14.5px;counter-reset:n}
+.an-nums li{counter-increment:n;display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start}
+.an-nums li::before{content:counter(n);width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:12px;margin-top:1px}
+.an-guides{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.an-guides b{font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-right:4px}
+.an-guides span{background:var(--an-paper);border:1px solid var(--c);border-radius:999px;padding:3px 11px;font-size:13.5px}
+.an-guides span strong{color:var(--c)}
+.an-lead{font-weight:600;font-size:15px}
+.an-bigicon{color:var(--c);font-size:64px;justify-self:center;align-self:center;opacity:.9}
+.an-note{display:flex;gap:10px;align-items:flex-start;background:var(--an-paper);border:1px solid var(--c);border-radius:10px;padding:10px 14px;font-size:14px}
+.an-note svg{color:var(--c);font-size:20px;margin-top:1px}
+.an-note b{color:var(--c)}
+
+.an-tips{display:grid}
+.an-tip{padding:16px 16px 18px;display:grid;gap:10px;font-size:14px;line-height:1.42}
+.an-tip+.an-tip{border-top:1px dashed #D9CFC4}
+.an-tip .an-ic{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--an-brown);color:var(--an-brown);display:grid;place-items:center;font-size:21px}
+
+.an-thread{background:var(--an-paper);border-radius:14px;padding:18px 20px 16px;display:grid;gap:14px;box-shadow:0 0 0 1px rgba(27,36,51,.08)}
+.an-thread h3{text-align:center;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:800;font-size:17px;text-transform:uppercase;letter-spacing:.03em;color:var(--an-navy)}
+.an-chain{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 6px}
+.an-chain li{display:flex;align-items:center;gap:8px;color:#fff;font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding:9px 18px 9px 10px;border-radius:999px}
+.an-chain li .an-ic{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;font-size:17px}
+.an-chain .an-arrow{color:var(--an-muted);font-size:20px;padding:0;background:none}
+.an-thread p{text-align:center;font-size:14.5px;color:var(--an-muted);max-width:70ch;justify-self:center}
+.an-foot{font-size:13px;color:var(--an-muted);line-height:1.4}
+.an-foot b{color:var(--an-ink)}
+
+@media (max-width:1100px){
+  .an-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"center center" "left right"}
+}
+@media (max-width:720px){
+  .anat{padding:24px 14px 20px;border-radius:14px}
+  .an-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"center" "left" "right"}
+  .an-two,.an-two.even{grid-template-columns:1fr}
+  .anat .an-steps{padding-left:0}
+  .an-steps::before{display:none}
+  .an-num{position:static;width:38px;height:38px;font-size:18px;box-shadow:none}
+  .an-stephead{flex-wrap:wrap}
+  .an-bigicon{display:none}
+}
+</style>
+
+<div class="anat" role="region" aria-label="Infografía Anatomía de un artículo científico">
+  <h2 class="an-title">Anatomía de un artículo científico</h2>
+
+  <div class="an-grid">
+    <aside class="an-side an-left">
+      <div class="an-sidehead">El lenguaje del artículo</div>
+      <div class="an-block">
+        <div class="an-blockhead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /> </svg></span>1. Lenguaje científico</div>
+        <ul class="an-dots">
+          <li><b>Precisión.</b> Una idea por oración y ninguna expresión ambigua.</li>
+          <li><b>Objetividad.</b> Sin juicios de valor ni adjetivos valorativos del tipo <i>excelente</i>, <i>impresionante</i> o <i>muy bueno</i>.</li>
+          <li><b>Impersonalidad.</b> Evita la primera persona. Prefiere la pasiva refleja, como «se aplicó» o «se evaluó», en lugar de «aplicamos» o «yo evalué». Verifica siempre las normas de la revista, porque algunas admiten la primera persona del plural.</li>
+          <li><b>Tiempos verbales.</b> Presente y pretérito en la introducción, pasado en metodología y resultados, presente en la interpretación de la discusión.</li>
+          <li><b>Siglas.</b> Se desarrollan en su primera aparición y se usan de forma consistente.</li>
+          <li><b>Evita los absolutos</b> como <i>siempre</i>, <i>nunca</i>, <i>es bien sabido</i> o <i>demuestra</i>. Prefiere <i>sugiere</i>, <i>se asocia</i> o <i>es compatible con</i>.</li>
+          <li>No traslades el lenguaje causal a diseños que no permiten establecer causalidad.</li>
+          <li>Evita anglicismos innecesarios cuando existe un término equivalente en español.</li>
+        </ul>
+      </div>
+      <div class="an-block">
+        <div class="an-blockhead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 7v14" /> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /> </svg></span>2. Importancia de citar</div>
+        <ul class="an-dots">
+          <li>Citar sustenta cada afirmación, reconoce la autoría ajena, permite la trazabilidad del argumento y previene el plagio.</li>
+          <li>Toda afirmación que no sea propia ni de conocimiento común debe llevar referencia.</li>
+          <li>Cita siempre la fuente primaria, nunca la fuente que la menciona.</li>
+          <li>Equilibra las referencias clásicas con literatura reciente y pertinente al problema.</li>
+          <li>Evita las citas de relleno y la autocitación excesiva.</li>
+          <li>Aplica la norma exigida por la revista, habitualmente APA séptima edición o Vancouver, y apóyate en gestores bibliográficos como Zotero o Mendeley.</li>
+          <li>No cites lo que no has leído. Si empleas inteligencia artificial generativa, verifica cada referencia en la fuente original, porque estas herramientas pueden fabricar citas inexistentes.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <ol class="an-steps an-center">
+      <li class="an-step">
+        <span class="an-num">1</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="11" cy="11" r="8" /> <path d="m21 21-4.3-4.3" /> </svg></span><h3>Introducción<small>El porqué</small></h3></div>
+        <div class="an-two">
+          <ul class="an-dots">
+            <li>Presenta el tema.</li>
+            <li>Incluye datos epidemiológicos o etnográficos y estadísticas internacionales, nacionales o locales obtenidas por otros autores.</li>
+            <li>Dimensiona el problema y justifica el artículo.</li>
+            <li>Plantea brevemente los antecedentes de forma crítica, no como catálogo de estudios.</li>
+            <li>Sigue una lógica de embudo, de lo general a lo específico.</li>
+          </ul>
+          <div class="an-box warn">
+            <h4><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <path d="m4.9 4.9 14.2 14.2" /> </svg>Aquí no va</h4>
+            <ul class="an-dots">
+              <li>Resultados propios.</li>
+              <li>Descripción de métodos.</li>
+              <li>Afirmaciones de originalidad sin sustento.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="an-strip"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <path d="m9 12 2 2 4-4" /> </svg>Cierra con el vacío de conocimiento y la pregunta de investigación.</p>
+      </li>
+
+      <li class="an-step">
+        <span class="an-num">2</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg></span><h3>Objetivos e hipótesis<small>El qué y el hasta dónde</small></h3></div>
+        <ul class="an-dots">
+          <li>Los autores plantean qué van a hacer, hasta dónde llega el estudio y qué esperan encontrar.</li>
+          <li>El objetivo general se formula con verbos evaluables, y los objetivos específicos son pasos que conducen a él, no fragmentos temáticos independientes.</li>
+          <li>La hipótesis no siempre aplica. En estudios descriptivos puede no existir; en estudios analíticos es obligatoria y debe ser direccional cuando la teoría lo permite.</li>
+          <li>En el enfoque cualitativo no hay hipótesis. Hay un propósito y preguntas orientadoras, que pueden reformularse durante el trabajo de campo.</li>
+        </ul>
+      </li>
+
+      <li class="an-step">
+        <span class="an-num">3</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /> <circle cx="12" cy="12" r="3" /> </svg></span><h3>Metodología<small>El cómo</small></h3></div>
+        <div class="an-two even">
+          <div>
+            <span class="an-pill">Enfoque cuantitativo</span>
+            <ul class="an-dots">
+              <li>Diseño del estudio.</li>
+              <li>Cálculo y tamaño muestral.</li>
+              <li>Características de la población.</li>
+              <li>Criterios de inclusión y exclusión.</li>
+              <li>Variables y métodos de obtención (técnicas, instrumentos, cálculos).</li>
+              <li>Plan de análisis estadístico.</li>
+              <li>Lugar y periodo del estudio.</li>
+              <li>Procedimiento de recolección paso a paso.</li>
+              <li>Control de sesgos.</li>
+              <li>Consideraciones éticas, con aval de comité y consentimiento informado.</li>
+              <li>Software utilizado y versión.</li>
+            </ul>
+          </div>
+          <div>
+            <span class="an-pill line">Enfoque cualitativo</span>
+            <ul class="an-dots">
+              <li>Postura epistemológica o paradigma.</li>
+              <li>Diseño específico (fenomenológico, etnográfico, teoría fundamentada, estudio de caso o investigación acción).</li>
+              <li>Participantes y muestreo intencional o teórico, con cierre por saturación.</li>
+              <li>Técnicas de generación de información (entrevista semiestructurada, grupo focal, observación participante, diario de campo).</li>
+              <li>Rol y reflexividad del investigador.</li>
+              <li>Procedimiento y sistema de codificación.</li>
+              <li>Criterios de rigor (credibilidad, transferibilidad, dependabilidad y confirmabilidad).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="an-guides"><b>Guías de reporte</b><span><strong>STROBE</strong> observacionales</span><span><strong>CONSORT</strong> ensayos</span><span><strong>PRISMA</strong> revisiones</span><span><strong>COREQ</strong> cualitativos</span></div>
+      </li>
+
+      <li class="an-step">
+        <span class="an-num">4</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /> </svg></span><h3>Resultados<small>El qué se encontró</small></h3></div>
+        <div class="an-two">
+          <div style="display:grid;gap:12px">
+            <ul class="an-dots">
+              <li>Se presentan los hallazgos posteriores al análisis.</li>
+              <li>No se interpretan, solo se presentan, mediante prosa, tablas, gráficos o diagramas según la naturaleza del dato.</li>
+            </ul>
+            <div class="an-box">
+              <h4>Tres reglas</h4>
+              <ol class="an-nums">
+                <li>Los resultados se ordenan siguiendo la secuencia de los objetivos.</li>
+                <li>No se duplica en el texto lo que ya dice la tabla o la figura.</li>
+                <li>No se citan otros autores.</li>
+              </ol>
+            </div>
+          </div>
+          <div style="display:grid;gap:12px">
+            <div class="an-box">
+              <h4 style="color:var(--c)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="m19 9-5 5-4-4-3 3" /> </svg>Cuantitativo</h4>
+              <p style="font-size:14px">El reporte completo exige el estadístico de contraste, el valor p exacto, el tamaño del efecto y el intervalo de confianza, además del flujo de participantes.</p>
+            </div>
+            <div class="an-box">
+              <h4 style="color:var(--c)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /> </svg>Cualitativo</h4>
+              <p style="font-size:14px">La información se organiza por categorías y subcategorías sostenidas con citas textuales de los participantes.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="an-step">
+        <span class="an-num">5</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /> <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /> <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" /> <path d="M17.599 6.5a3 3 0 0 0 .399-1.375" /> <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /> <path d="M3.477 10.896a4 4 0 0 1 .585-.396" /> <path d="M19.938 10.5a4 4 0 0 1 .585.396" /> <path d="M6 18a4 4 0 0 1-1.967-.516" /> <path d="M19.967 17.484A4 4 0 0 1 18 18" /> </svg></span><h3>Discusión<small>El qué significa</small></h3></div>
+        <p class="an-lead">Abre con el hallazgo principal enunciado en una o dos frases, sin repetir la totalidad de los resultados.</p>
+        <div class="an-two">
+          <ol class="an-nums">
+            <li>Comparar los hallazgos propios con la evidencia científica disponible.</li>
+            <li>Explicar los hallazgos desde la teoría, mediante plausibilidad biológica, argumentación teórica, interpretación y triangulación.</li>
+            <li>Mencionar y argumentar las fortalezas y las limitaciones del propio estudio.</li>
+          </ol>
+          <span class="an-bigicon"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /> <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /> <path d="M7 21h10" /> <path d="M12 3v18" /> <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /> </svg></span>
+        </div>
+        <p class="an-strip"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <path d="m9 12 2 2 4-4" /> </svg>Cierra con las implicaciones prácticas y las líneas futuras de investigación.</p>
+      </li>
+
+      <li class="an-step">
+        <span class="an-num">6</span>
+        <div class="an-stephead"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 10.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.5" /> <path d="m9 11 3 3L22 4" /> </svg></span><h3>Conclusiones<small>El cierre</small></h3></div>
+        <div class="an-two even">
+          <ul class="an-dots">
+            <li>Presenta lo encontrado, fundamentado desde los objetivos, con una conclusión por cada objetivo planteado.</li>
+            <li>No introduce información nueva.</li>
+            <li>Debe ser coherente con el alcance del estudio.</li>
+          </ul>
+          <div class="an-box warn">
+            <h4><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /> <path d="M12 9v4" /> <path d="M12 17h.01" /> </svg>Advertencias</h4>
+            <ol class="an-nums">
+              <li>No incorporar datos nuevos.</li>
+              <li>No exceder el alcance del diseño con lenguaje causal.</li>
+              <li>No generalizar a poblaciones no estudiadas.</li>
+              <li>No cerrar con la fórmula vacía de que se requieren más estudios.</li>
+            </ol>
+          </div>
+        </div>
+        <p class="an-note"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <path d="M12 16v-4" /> <path d="M12 8h.01" /> </svg><span><b>Conclusión y recomendación no son sinónimos.</b> La conclusión responde lo que el estudio encontró. La recomendación sugiere qué podría hacerse a partir de los hallazgos.</span></p>
+      </li>
+    </ol>
+
+    <aside class="an-side an-right">
+      <div class="an-sidehead">Cómo escribirlo</div>
+      <div class="an-tips">
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /> <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" /> </svg></span><p>Escribe en este orden. Primero metodología y resultados, después introducción y discusión, y al final el título y el resumen.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 12H3" /> <path d="M17 18H3" /> <path d="M21 6H3" /> </svg></span><p>Un párrafo, una idea. Comienza cada párrafo con la oración que contiene la idea principal.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="M12 11h4" /> <path d="M12 16h4" /> <path d="M8 11h.01" /> <path d="M8 16h.01" /> </svg></span><p>Revisa las normas para autores y la guía de reporte correspondiente antes de escribir la primera línea, no después.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" /> <path d="M21.21 15.89A10 10 0 1 1 8 2.83" /> </svg></span><p>Distribuye la extensión. El mayor peso del manuscrito recae en resultados y discusión.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg></span><p>No prometas en la introducción aquello que no vas a responder en las conclusiones.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z" /> <path d="M16 9a5 5 0 0 1 0 6" /> <path d="M19.364 18.364a9 9 0 0 0 0-12.728" /> </svg></span><p>Lee el texto en voz alta y déjalo reposar al menos veinticuatro horas antes de la revisión final.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <circle cx="9" cy="7" r="4" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> </svg></span><p>Somete el manuscrito a una revisión interna entre pares antes de enviarlo a la revista.</p></div>
+        <div class="an-tip"><span class="an-ic"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /> </svg></span><p>Escribe pensando en el revisor, que debe poder seguir sin esfuerzo la línea que va de la pregunta a la conclusión.</p></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="an-thread" aria-label="El hilo del manuscrito">
+    <h3>El hilo que debe atravesar todo el manuscrito</h3>
+    <ol class="an-chain">
+      <li style="background:var(--an-navy)"><span class="an-ic" style="color:var(--an-navy)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" /> </svg></span>Pregunta</li>
+      <li class="an-arrow" aria-hidden="true"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></li>
+      <li style="background:var(--c2)"><span class="an-ic" style="color:var(--c2)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg></span>Objetivo</li>
+      <li class="an-arrow" aria-hidden="true"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></li>
+      <li style="background:var(--c3)"><span class="an-ic" style="color:var(--c3)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /> </svg></span>Variable</li>
+      <li class="an-arrow" aria-hidden="true"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></li>
+      <li style="background:var(--c4)"><span class="an-ic" style="color:var(--c4)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="m19 9-5 5-4-4-3 3" /> </svg></span>Análisis</li>
+      <li class="an-arrow" aria-hidden="true"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></li>
+      <li style="background:var(--c5)"><span class="an-ic" style="color:var(--c5)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="m9 14 2 2 4-4" /> </svg></span>Resultado</li>
+      <li class="an-arrow" aria-hidden="true"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></li>
+      <li style="background:var(--c6)"><span class="an-ic" style="color:var(--c6)"><svg class="an-i" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 10.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.5" /> <path d="m9 11 3 3L22 4" /> </svg></span>Conclusión</li>
+    </ol>
+    <p>Si alguno de estos elementos no se corresponde con el anterior, el manuscrito pierde coherencia interna, con independencia de la calidad de los datos.</p>
+  </section>
+
+  <p class="an-foot">Elaborado por <b>Diego Fernando Afanador Restrepo, PhD</b>. Grupo de Investigación Movimiento Corporal Humano y Calidad de Vida.</p>
+</div>
+
+  </div>
+</section>
+
+<!-- INTRODUCCIÓN -->
+<section class="course" id="introduccion">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Receta 1</span>
+      <h2>La introducción por capas</h2>
+      <p class="lead">La introducción se arma en capas que van de lo general a lo particular. Primero ubicas al lector en el problema, luego le presentas las variables que vas a estudiar, después le muestras qué se ha hecho y qué falta, y terminas con el objetivo.</p>
+    </div>
+
+    <figure>
+      <div class="fig-box">
+        <svg viewBox="0 0 760 410" role="img" aria-label="Embudo de cuatro capas. Capa uno, contexto con cifras. Capa dos, un párrafo por cada variable. Capa tres, antecedentes y diferencia con tu estudio. Capa cuatro, el objetivo general.">
+          <rect x="60" y="14" width="640" height="84" rx="10" class="f-soft st-basil"/>
+          <text x="380" y="48" text-anchor="middle" font-size="17" font-weight="700" class="t-ink">Capa 1 · Contexto</text>
+          <text x="380" y="72" text-anchor="middle" font-size="13" class="t-muted">Cifras, datos y evidencia que permiten dimensionar el problema</text>
+          <rect x="110" y="112" width="540" height="84" rx="10" class="f-mid st-basil"/>
+          <text x="380" y="146" text-anchor="middle" font-size="17" font-weight="700" class="t-ink">Capa 2 · Las variables</text>
+          <text x="380" y="170" text-anchor="middle" font-size="13" class="t-ink">Un párrafo por variable y por qué importa estudiarla</text>
+          <rect x="160" y="210" width="440" height="84" rx="10" class="f-mid st-basil"/>
+          <text x="380" y="244" text-anchor="middle" font-size="17" font-weight="700" class="t-ink">Capa 3 · Antecedentes</text>
+          <text x="380" y="268" text-anchor="middle" font-size="13" class="t-ink">Qué se ha hecho y en qué se diferencia tu estudio</text>
+          <rect x="230" y="308" width="300" height="84" rx="10" class="f-basil"/>
+          <text x="380" y="342" text-anchor="middle" font-size="17" font-weight="700" class="t-on">Capa 4 · Objetivo</text>
+          <text x="380" y="366" text-anchor="middle" font-size="13" class="t-on">Una oración que cierra la introducción</text>
+          <text x="40" y="60" text-anchor="end" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">1-2 §</text>
+          <text x="92" y="158" text-anchor="end" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">2-4 §</text>
+          <text x="142" y="256" text-anchor="end" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">1-2 §</text>
+          <text x="212" y="354" text-anchor="end" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">1 oración</text>
+        </svg>
+      </div>
+      <figcaption><b>Las cuatro capas.</b> A la izquierda, el número aproximado de párrafos de cada capa. La segunda es la más extensa, porque dedica un párrafo a cada variable según el método elegido.</figcaption>
+    </figure>
+
+    <article class="recipe" aria-labelledby="r1">
+      <div class="recipe-top">
+        <div><span class="label">Receta</span><strong id="r1">Introducción</strong></div>
+        <div><span class="label">Rinde</span><strong>5 a 8 párrafos</strong></div>
+        <div><span class="label">Se prepara</span><strong>Después de resultados y métodos</strong></div>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <span class="label">Ingredientes</span>
+          <ul>
+            <li>Dos o tres cifras recientes que muestren la magnitud del problema (prevalencia, costos, tendencias).</li>
+            <li>La lista de tus variables principales, como la población o patología, la exposición o intervención y el desenlace.</li>
+            <li>Las revisiones y estudios previos más cercanos a tu pregunta.</li>
+            <li>Una frase clara sobre lo que tu estudio hace distinto.</li>
+            <li>El objetivo general, tal como aparece en tu protocolo.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Preparación</span>
+          <ol>
+            <li><b>Contextualiza.</b> Abre con datos que le permitan al lector entender y dimensionar el problema. Empieza en el nivel más amplio que sea relevante (mundo, región, país) y acércate a tu población.</li>
+            <li><b>Presenta cada variable.</b> Dedica un párrafo a cada una. Explica qué es, cómo se define o se mide y por qué vale la pena investigarla. No hables todavía de su eficacia ni de su relación con el desenlace, porque eso es lo que tu estudio va a responder.</li>
+            <li><b>Ajusta las variables al método.</b> En un ensayo presentarás la condición, la intervención y el desenlace. En un estudio transversal, las características o exposiciones y el desenlace. En una revisión, la población, la intervención y lo que se sabe de forma dispersa.</li>
+            <li><b>Muestra los antecedentes.</b> Resume lo que otros han hecho sobre tu pregunta y señala en qué se diferencia tu estudio (otra población, otra dosis, otro diseño, otro desenlace). Esa diferencia justifica la necesidad del trabajo.</li>
+            <li><b>Cierra con el objetivo.</b> Escribe el objetivo general en una oración. Algunas revistas piden también la hipótesis.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="recipe-foot">
+        <div class="ready">
+          <span class="label">Está en su punto si</span>
+          <p>Un lector que no conoce tu tema llega al último párrafo y piensa que el objetivo era la pregunta obvia que faltaba responder.</p>
+        </div>
+        <div class="burnt">
+          <span class="label">Se quema si</span>
+          <p>Empiezas con una definición de diccionario, adelantas resultados de eficacia en la capa de variables, o cierras con un objetivo que no se desprende de los antecedentes.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="prose">
+      <h3>Así se ve en un artículo publicado</h3>
+      <p>La introducción de nuestra revisión sobre la dosis del entrenamiento de alta intensidad en personas mayores con deterioro cognitivo (ACHIEVE, 2024) sigue estas capas. Te la muestro resumida, párrafo por párrafo.</p>
+    </div>
+    <div class="annot">
+      <div><span class="label">Capa 1</span><p>Describe la transición demográfica en Colombia con datos del DANE. El índice de envejecimiento pasó de 12 personas mayores por cada 100 menores de 15 años en 1950 a 49 en 2020.</p></div>
+      <div><span class="label">Capa 2 · Condición</span><p>Explica cómo el envejecimiento afecta regiones cerebrales y funciones cognitivas, define el deterioro cognitivo leve y lo presenta como un estado previo a la demencia.</p></div>
+      <div><span class="label">Capa 2 · Magnitud</span><p>Muestra que el deterioro cognitivo es un problema de salud pública, con una proyección de 78 millones de casos de demencia hacia 2030.</p></div>
+      <div><span class="label">Capa 2 · Intervención</span><p>Presenta el ejercicio como estrategia de interés y define el entrenamiento de alta intensidad con sus umbrales de carga y de frecuencia cardiaca.</p></div>
+      <div><span class="label">Capa 3</span><p>Recoge revisiones previas cuya heterogeneidad impide atribuir los efectos a un protocolo concreto. Ahí aparece el vacío que justifica estudiar la dosis.</p></div>
+      <div><span class="label">Capa 4</span><p>Cierra con el objetivo de determinar la relación dosis-respuesta que logra el mayor efecto sobre la cognición.</p></div>
+    </div>
+
+    <div class="prose">
+      <h3>Tu mesa de trabajo</h3>
+      <p>Llena cada capa con lo que tengas, aunque sea en notas sueltas. A la derecha aparece el orden de párrafos de tu introducción. Lo que escribas se guarda solo en este navegador.</p>
+    </div>
+    <div class="bench" id="bench-intro">
+      <div class="bench-in">
+        <div class="bench-head"><span class="example-flag" data-flag>Ejemplo cargado</span>
+          <div class="btns"><button type="button" class="ghost" data-clear>Vaciar</button><button type="button" class="ghost" data-example>Ver ejemplo</button></div></div>
+        <label for="in-ctx">Capa 1 · Contexto<span>El dato o la cifra con que abrirás.</span>
+          <textarea id="in-ctx" data-k="ctx"></textarea></label>
+        <label for="in-v1">Capa 2 · Variable 1<span>Población o condición.</span><input id="in-v1" data-k="v1"></label>
+        <label for="in-v2">Capa 2 · Variable 2<span>Exposición o intervención.</span><input id="in-v2" data-k="v2"></label>
+        <label for="in-v3">Capa 2 · Variable 3<span>Desenlace. Déjala vacía si no aplica.</span><input id="in-v3" data-k="v3"></label>
+        <label for="in-ant">Capa 3 · Antecedentes<span>Qué se ha investigado sobre tu pregunta.</span><textarea id="in-ant" data-k="ant"></textarea></label>
+        <label for="in-dif">Capa 3 · Diferencia<span>Qué hace distinto tu estudio.</span><textarea id="in-dif" data-k="dif"></textarea></label>
+        <label for="in-obj">Capa 4 · Objetivo general<input id="in-obj" data-k="obj"></label>
+      </div>
+      <div class="bench-out">
+        <div class="bench-head"><span class="label">Orden de tu introducción</span><button type="button" data-copy>Copiar esquema</button></div>
+        <ol class="plan" data-out></ol>
+        <p class="status" data-status aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGÍA -->
+<section class="course" id="metodologia">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Receta 2</span>
+      <h2>La metodología, siguiendo un gemelo</h2>
+      <p class="lead">La metodología es un caso aparte. Aquí lo mejor es seguir un artículo que haya hecho lo mismo que tú, aunque sea sobre otro tema. Del modelo tomas el orden de los apartados y el nivel de detalle, y lo llenas con tu propio estudio.</p>
+    </div>
+
+    <figure>
+      <div class="fig-box">
+        <svg viewBox="0 0 720 400" role="img" aria-label="Dos columnas de apartados. A la izquierda el artículo modelo, de otro tema y el mismo diseño. A la derecha tu artículo. Flechas unen cada apartado del modelo con el mismo apartado de tu artículo.">
+          <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker></defs>
+          <text x="155" y="26" text-anchor="middle" font-size="15" font-weight="700" class="t-ink">Artículo modelo</text>
+          <text x="155" y="44" text-anchor="middle" font-size="12" class="t-muted">otro tema, mismo diseño</text>
+          <text x="565" y="26" text-anchor="middle" font-size="15" font-weight="700" class="t-basil">Tu artículo</text>
+          <text x="565" y="44" text-anchor="middle" font-size="12" class="t-muted">tu tema, misma estructura</text>
+          <text x="360" y="44" text-anchor="middle" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">orden y detalle</text>
+          <g font-size="13">
+            <rect x="40" y="62" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="84" text-anchor="middle" class="t-muted">Diseño del estudio</text>
+            <rect x="450" y="62" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="84" text-anchor="middle" class="t-ink">Diseño del estudio</text>
+            <line x1="276" y1="79" x2="444" y2="79" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="106" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="128" text-anchor="middle" class="t-muted">Participantes y muestreo</text>
+            <rect x="450" y="106" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="128" text-anchor="middle" class="t-ink">Participantes y muestreo</text>
+            <line x1="276" y1="123" x2="444" y2="123" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="150" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="172" text-anchor="middle" class="t-muted">Intervención o variables</text>
+            <rect x="450" y="150" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="172" text-anchor="middle" class="t-ink">Intervención o variables</text>
+            <line x1="276" y1="167" x2="444" y2="167" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="194" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="216" text-anchor="middle" class="t-muted">Instrumentos de medida</text>
+            <rect x="450" y="194" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="216" text-anchor="middle" class="t-ink">Instrumentos de medida</text>
+            <line x1="276" y1="211" x2="444" y2="211" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="238" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="260" text-anchor="middle" class="t-muted">Procedimiento</text>
+            <rect x="450" y="238" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="260" text-anchor="middle" class="t-ink">Procedimiento</text>
+            <line x1="276" y1="255" x2="444" y2="255" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="282" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="304" text-anchor="middle" class="t-muted">Análisis estadístico</text>
+            <rect x="450" y="282" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="304" text-anchor="middle" class="t-ink">Análisis estadístico</text>
+            <line x1="276" y1="299" x2="444" y2="299" class="s-line" marker-end="url(#ah2)"/>
+            <rect x="40" y="326" width="230" height="34" rx="7" class="f-surface s-dash"/><text x="155" y="348" text-anchor="middle" class="t-muted">Aspectos éticos</text>
+            <rect x="450" y="326" width="230" height="34" rx="7" class="f-soft st-basil"/><text x="565" y="348" text-anchor="middle" class="t-ink">Aspectos éticos</text>
+            <line x1="276" y1="343" x2="444" y2="343" class="s-line" marker-end="url(#ah2)"/>
+          </g>
+          <text x="360" y="388" text-anchor="middle" font-size="12" class="t-muted">Los nombres de los apartados cambian según el diseño y la revista</text>
+        </svg>
+      </div>
+      <figcaption><b>El gemelo metodológico.</b> Del artículo modelo se copia la arquitectura, nunca el texto. Cada apartado se escribe con los datos de tu estudio y con el nivel de detalle que permita replicarlo.</figcaption>
+    </figure>
+
+    <article class="recipe" aria-labelledby="r2">
+      <div class="recipe-top">
+        <div><span class="label">Receta</span><strong id="r2">Metodología</strong></div>
+        <div><span class="label">Rinde</span><strong>Según el diseño</strong></div>
+        <div><span class="label">Se prepara</span><strong>Desde el protocolo</strong></div>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <span class="label">Ingredientes</span>
+          <ul>
+            <li>Tu protocolo aprobado.</li>
+            <li>Un artículo modelo con tu mismo diseño.</li>
+            <li>La guía de reporte del diseño (CONSORT, STROBE, PRISMA u otra).</li>
+            <li>La lista de instrumentos con su validez y fiabilidad.</li>
+            <li>El plan de análisis estadístico.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Preparación</span>
+          <ol>
+            <li><b>Busca el gemelo.</b> Elige en los atajos de abajo un artículo con tu diseño o busca uno en la revista a la que enviarás el tuyo.</li>
+            <li><b>Copia la arquitectura.</b> Anota los subtítulos del modelo y su orden, y úsalos como índice.</li>
+            <li><b>Abre la guía de reporte.</b> Revisa qué ítems pide para la metodología y comprueba que cada uno tenga su lugar en tu índice.</li>
+            <li><b>Escribe en pasado y con detalle.</b> Describe lo que hiciste, no lo que pensabas hacer, con la información suficiente para que otro equipo pueda repetirlo.</li>
+            <li><b>Cierra con la ética y el análisis.</b> Incluye el aval del comité, el consentimiento informado, el programa estadístico y el nivel de significación.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="recipe-foot">
+        <div class="ready">
+          <span class="label">Está en su punto si</span>
+          <p>Otro investigador podría repetir tu estudio sin escribirte para preguntar nada.</p>
+        </div>
+        <div class="burnt">
+          <span class="label">Se quema si</span>
+          <p>Copias frases del modelo, describes instrumentos sin su validez, o el análisis estadístico no corresponde a los objetivos específicos.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="prose">
+      <h3>Atajos a artículos modelo</h3>
+      <p>Estos son artículos en los que he participado, organizados por diseño. Abre el que se parezca a tu estudio y úsalo como gemelo. Si tu diseño no aparece, las tarjetas punteadas te indican qué guía de reporte buscar.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filtrar por tipo de estudio">
+      <button type="button" class="chip" aria-pressed="true" data-f="todos">Todos</button>
+      <button type="button" class="chip" aria-pressed="false" data-f="obs">Observacionales</button>
+      <button type="button" class="chip" aria-pressed="false" data-f="exp">Experimentales</button>
+      <button type="button" class="chip" aria-pressed="false" data-f="rev">Revisiones</button>
+      <button type="button" class="chip" aria-pressed="false" data-f="otros">Otros diseños</button>
+    </div>
+    <div class="methods" id="methods"></div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section class="course" id="resultados">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Receta 3</span>
+      <h2>Los resultados, en el orden de la estadística</h2>
+      <p class="lead">Los resultados siguen siempre el proceso lógico que hay detrás del análisis. Primero describes a quiénes estudiaste, después respondes cada objetivo específico en el orden en que los planteaste, y dentro de cada objetivo repites la misma secuencia estadística.</p>
+    </div>
+
+    <figure>
+      <div class="fig-box">
+        <svg viewBox="0 0 760 250" role="img" aria-label="Cadena de resultados. Participantes, características basales, objetivo específico uno, objetivo específico dos y objetivo n. Dentro de cada objetivo se describe, se revisan supuestos, se contrasta o estima y se reporta el tamaño del efecto con su intervalo.">
+          <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker></defs>
+          <g font-size="13">
+            <rect x="10" y="20" width="128" height="58" rx="8" class="f-soft st-basil"/>
+            <text x="74" y="45" text-anchor="middle" font-weight="700" class="t-ink">Participantes</text>
+            <text x="74" y="63" text-anchor="middle" font-size="11" class="t-muted">flujo y pérdidas</text>
+            <line x1="140" y1="49" x2="156" y2="49" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="160" y="20" width="128" height="58" rx="8" class="f-soft st-basil"/>
+            <text x="224" y="45" text-anchor="middle" font-weight="700" class="t-ink">Características</text>
+            <text x="224" y="63" text-anchor="middle" font-size="11" class="t-muted">basales · Tabla 1</text>
+            <line x1="290" y1="49" x2="306" y2="49" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="310" y="20" width="128" height="58" rx="8" class="f-basil"/>
+            <text x="374" y="45" text-anchor="middle" font-weight="700" class="t-on">Objetivo</text>
+            <text x="374" y="63" text-anchor="middle" font-size="11" class="t-on">específico 1</text>
+            <line x1="440" y1="49" x2="456" y2="49" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="460" y="20" width="128" height="58" rx="8" class="f-mid st-basil"/>
+            <text x="524" y="45" text-anchor="middle" font-weight="700" class="t-ink">Objetivo</text>
+            <text x="524" y="63" text-anchor="middle" font-size="11" class="t-ink">específico 2</text>
+            <line x1="590" y1="49" x2="606" y2="49" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="610" y="20" width="128" height="58" rx="8" class="f-mid st-basil"/>
+            <text x="674" y="45" text-anchor="middle" font-weight="700" class="t-ink">Objetivo</text>
+            <text x="674" y="63" text-anchor="middle" font-size="11" class="t-ink">específico n</text>
+          </g>
+          <line x1="374" y1="80" x2="374" y2="118" class="s-dash"/>
+          <line x1="110" y1="118" x2="668" y2="118" class="s-dash"/>
+          <text x="380" y="146" text-anchor="middle" font-size="12" class="t-muted">dentro de cada objetivo se repite la misma secuencia</text>
+          <g font-size="13">
+            <rect x="30" y="164" width="160" height="56" rx="8" class="f-yolk st-line"/>
+            <text x="110" y="188" text-anchor="middle" font-weight="700" class="t-ink">Describir</text>
+            <text x="110" y="206" text-anchor="middle" font-size="11" class="t-muted">media, DE, mediana, %</text>
+            <line x1="192" y1="192" x2="212" y2="192" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="216" y="164" width="160" height="56" rx="8" class="f-yolk st-line"/>
+            <text x="296" y="188" text-anchor="middle" font-weight="700" class="t-ink">Revisar supuestos</text>
+            <text x="296" y="206" text-anchor="middle" font-size="11" class="t-muted">distribución, varianzas</text>
+            <line x1="378" y1="192" x2="398" y2="192" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="402" y="164" width="160" height="56" rx="8" class="f-yolk st-line"/>
+            <text x="482" y="188" text-anchor="middle" font-weight="700" class="t-ink">Contrastar o estimar</text>
+            <text x="482" y="206" text-anchor="middle" font-size="11" class="t-muted">prueba y valor p</text>
+            <line x1="564" y1="192" x2="584" y2="192" class="s-line" marker-end="url(#ah3)"/>
+            <rect x="588" y="164" width="160" height="56" rx="8" class="f-yolk st-line"/>
+            <text x="668" y="188" text-anchor="middle" font-weight="700" class="t-ink">Magnitud</text>
+            <text x="668" y="206" text-anchor="middle" font-size="11" class="t-muted">tamaño del efecto e IC 95 %</text>
+            <line x1="110" y1="118" x2="110" y2="160" class="s-dash"/>
+            <line x1="668" y1="118" x2="668" y2="160" class="s-dash"/>
+          </g>
+        </svg>
+      </div>
+      <figcaption><b>La cadena de resultados.</b> Arriba, el orden de los apartados. Abajo, la secuencia que se repite dentro de cada objetivo específico, desde la descripción hasta la magnitud del efecto.</figcaption>
+    </figure>
+
+    <article class="recipe" aria-labelledby="r3">
+      <div class="recipe-top">
+        <div><span class="label">Receta</span><strong id="r3">Resultados</strong></div>
+        <div><span class="label">Rinde</span><strong>Un apartado por objetivo</strong></div>
+        <div><span class="label">Se prepara</span><strong>Primero que todo</strong></div>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <span class="label">Ingredientes</span>
+          <ul>
+            <li>Los objetivos específicos, en su orden.</li>
+            <li>La salida del análisis estadístico ya revisada.</li>
+            <li>El diagrama de flujo de participantes (CONSORT, STROBE o PRISMA, según el diseño).</li>
+            <li>La tabla de características basales.</li>
+            <li>Las tablas y figuras de cada objetivo.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Preparación</span>
+          <ol>
+            <li><b>Cuenta quiénes entraron.</b> Reporta cuántas personas se evaluaron, cuántas se incluyeron y cuántas se perdieron, con sus razones.</li>
+            <li><b>Describe la muestra.</b> Presenta la tabla de características basales y comenta solo lo más relevante.</li>
+            <li><b>Responde el primer objetivo específico.</b> Describe los datos, indica cómo se verificaron los supuestos, presenta la prueba o la estimación y cierra con el tamaño del efecto y su intervalo de confianza.</li>
+            <li><b>Repite con cada objetivo.</b> Usa un subtítulo por objetivo y conserva el mismo orden del planteamiento.</li>
+            <li><b>Elige tabla o figura, no las dos.</b> Si un dato está en una tabla, en el texto solo se destaca lo esencial.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="recipe-foot">
+        <div class="ready">
+          <span class="label">Está en su punto si</span>
+          <p>Cada objetivo específico tiene su respuesta, en el mismo orden, y cada resultado trae su estimación, su intervalo y su valor p.</p>
+        </div>
+        <div class="burnt">
+          <span class="label">Se quema si</span>
+          <p>Interpretas o citas otros estudios (eso va en la discusión), repites en el texto toda la tabla, o reportas solo "significativo" o "no significativo".</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="note">
+      <span class="label">Para elegir la prueba</span>
+      <p>La secuencia estadística de cada objetivo depende del diseño y del tipo de variable. La herramienta Estadística en salud te acompaña en esa decisión, con tutoriales en SPSS y jamovi.</p>
+    </div>
+
+    <div class="prose">
+      <h3>Tu mesa de trabajo</h3>
+      <p>Escribe tus objetivos específicos, uno por línea. A la derecha aparece la estructura de tu apartado de resultados.</p>
+    </div>
+    <div class="bench" id="bench-res">
+      <div class="bench-in">
+        <div class="bench-head"><span class="example-flag" data-flag>Ejemplo cargado</span>
+          <div class="btns"><button type="button" class="ghost" data-clear>Vaciar</button><button type="button" class="ghost" data-example>Ver ejemplo</button></div></div>
+        <label for="in-flow">Diagrama de flujo<span>CONSORT, STROBE o PRISMA, según tu diseño.</span><input id="in-flow" data-k="flow"></label>
+        <label for="in-objs">Objetivos específicos<span>Uno por línea, en el orden de tu protocolo.</span><textarea id="in-objs" data-k="objs" style="min-height:8rem"></textarea></label>
+      </div>
+      <div class="bench-out">
+        <div class="bench-head"><span class="label">Estructura de tus resultados</span><button type="button" data-copy>Copiar esquema</button></div>
+        <ol class="plan" data-out></ol>
+        <p class="status" data-status aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCUSIÓN -->
+<section class="course" id="discusion">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Receta 4</span>
+      <h2>La discusión, un hallazgo por párrafo</h2>
+      <p class="lead">La discusión parte del objetivo general y de los hallazgos principales, y luego dedica un párrafo a cada hallazgo. Termina con las limitaciones, que dicen hasta dónde se puede interpretar el estudio. La estructura funciona igual para un ensayo, un estudio transversal o una revisión.</p>
+    </div>
+
+    <figure>
+      <div class="fig-box">
+        <svg viewBox="0 0 720 410" role="img" aria-label="Espejo entre resultados y discusión. Cada hallazgo de los resultados alimenta el párrafo de apertura y tiene además su propio párrafo en la discusión. Al final hay un párrafo de limitaciones.">
+          <defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ar"/></marker></defs>
+          <text x="140" y="28" text-anchor="middle" font-size="15" font-weight="700" class="t-ink">Resultados</text>
+          <text x="560" y="28" text-anchor="middle" font-size="15" font-weight="700" class="t-basil">Discusión</text>
+          <g font-size="13">
+            <rect x="440" y="46" width="240" height="44" rx="8" class="f-basil"/>
+            <text x="560" y="66" text-anchor="middle" font-weight="700" class="t-on">Párrafo 1 · Apertura</text>
+            <text x="560" y="82" text-anchor="middle" font-size="11" class="t-on">objetivo y hallazgos principales</text>
+            <rect x="40" y="110" width="200" height="40" rx="8" class="f-yolk st-line"/><text x="140" y="135" text-anchor="middle" class="t-ink">Hallazgo 1</text>
+            <rect x="440" y="110" width="240" height="40" rx="8" class="f-soft st-basil"/><text x="560" y="135" text-anchor="middle" class="t-ink">Párrafo 2 · Hallazgo 1</text>
+            <rect x="40" y="170" width="200" height="40" rx="8" class="f-yolk st-line"/><text x="140" y="195" text-anchor="middle" class="t-ink">Hallazgo 2</text>
+            <rect x="440" y="170" width="240" height="40" rx="8" class="f-soft st-basil"/><text x="560" y="195" text-anchor="middle" class="t-ink">Párrafo 3 · Hallazgo 2</text>
+            <rect x="40" y="230" width="200" height="40" rx="8" class="f-yolk st-line"/><text x="140" y="255" text-anchor="middle" class="t-ink">Hallazgo 3</text>
+            <rect x="440" y="230" width="240" height="40" rx="8" class="f-soft st-basil"/><text x="560" y="255" text-anchor="middle" class="t-ink">Párrafo 4 · Hallazgo 3</text>
+            <rect x="40" y="290" width="200" height="40" rx="8" class="f-yolk st-line"/><text x="140" y="315" text-anchor="middle" class="t-ink">Hallazgo 4</text>
+            <rect x="440" y="290" width="240" height="40" rx="8" class="f-soft st-basil"/><text x="560" y="315" text-anchor="middle" class="t-ink">Párrafo 5 · Hallazgo 4</text>
+            <rect x="440" y="350" width="240" height="44" rx="8" class="f-mid st-basil"/>
+            <text x="560" y="370" text-anchor="middle" font-weight="700" class="t-ink">Párrafo 6 · Limitaciones</text>
+            <text x="560" y="386" text-anchor="middle" font-size="11" class="t-ink">lo que se puede y no se puede afirmar</text>
+          </g>
+          <line x1="242" y1="130" x2="436" y2="130" class="s-line" marker-end="url(#ah4)"/>
+          <line x1="242" y1="190" x2="436" y2="190" class="s-line" marker-end="url(#ah4)"/>
+          <line x1="242" y1="250" x2="436" y2="250" class="s-line" marker-end="url(#ah4)"/>
+          <line x1="242" y1="310" x2="436" y2="310" class="s-line" marker-end="url(#ah4)"/>
+          <path d="M242,122 C320,122 340,70 436,70" class="s-dash"/>
+          <path d="M242,182 C330,182 340,72 436,72" class="s-dash"/>
+          <path d="M242,242 C340,242 350,74 436,74" class="s-dash"/>
+          <path d="M242,302 C350,302 360,76 436,76" class="s-dash"/>
+          <text x="330" y="100" text-anchor="middle" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">se resumen</text>
+          <text x="340" y="342" text-anchor="middle" font-size="11" class="t-muted" font-family="IBM Plex Mono, monospace">se discuten uno a uno</text>
+        </svg>
+      </div>
+      <figcaption><b>El espejo.</b> Todos los hallazgos se resumen en el párrafo de apertura, en el mismo orden de los resultados. Después cada uno recibe su propio párrafo, y el cierre se dedica a las limitaciones.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <h3>Qué lleva cada párrafo de hallazgo</h3>
+      <p>Los párrafos centrales comparten una estructura que se adapta al hallazgo. No todos necesitan los cuatro pasos con la misma extensión.</p>
+    </div>
+    <div class="steps" aria-label="Pasos de un párrafo de hallazgo">
+      <span class="step">Qué encontraste</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="step">Qué han encontrado otros</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="step">Por qué pudo pasar</span><span class="arrow" aria-hidden="true">→</span>
+      <span class="step">Qué implica</span>
+    </div>
+
+    <article class="recipe" aria-labelledby="r4">
+      <div class="recipe-top">
+        <div><span class="label">Receta</span><strong id="r4">Discusión</strong></div>
+        <div><span class="label">Rinde</span><strong>Un párrafo por hallazgo, más apertura y cierre</strong></div>
+        <div><span class="label">Se prepara</span><strong>Después de la introducción</strong></div>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <span class="label">Ingredientes</span>
+          <ul>
+            <li>El objetivo general.</li>
+            <li>La lista de hallazgos, en el orden de los resultados.</li>
+            <li>Estudios que coinciden y que difieren con cada hallazgo.</li>
+            <li>Posibles explicaciones (fisiológicas, pedagógicas, contextuales o metodológicas).</li>
+            <li>Las limitaciones reales del diseño y de su ejecución.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Preparación</span>
+          <ol>
+            <li><b>Abre con el objetivo y los hallazgos.</b> Recuerda en una oración qué buscaba el estudio y enumera los hallazgos principales en el mismo orden de los resultados.</li>
+            <li><b>Discute cada hallazgo por separado.</b> Un párrafo por hallazgo. Compara con otros estudios, propone una explicación y señala qué implica.</li>
+            <li><b>Profundiza cuando tengas con qué.</b> Si dispones de covariables o análisis adicionales, úsalos para sostener la explicación.</li>
+            <li><b>Anota las limitaciones mientras escribes.</b> Muchas aparecen al explicar un hallazgo, como un grupo sin incentivo o una medición indirecta.</li>
+            <li><b>Cierra con las limitaciones.</b> Di qué permite asegurar el estudio, qué no, y qué queda pendiente para futuras investigaciones.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="recipe-foot">
+        <div class="ready">
+          <span class="label">Está en su punto si</span>
+          <p>Cada hallazgo de los resultados tiene su párrafo, cada explicación se apoya en literatura, y las conclusiones no prometen más de lo que permite el diseño.</p>
+        </div>
+        <div class="burnt">
+          <span class="label">Se quema si</span>
+          <p>Repites los números de los resultados, presentas hallazgos nuevos, ignoras los resultados que no salieron como esperabas, o usas lenguaje causal en un estudio observacional.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="prose">
+      <h3>Un ejemplo con un ensayo</h3>
+      <p>Este es el plan de discusión de un ensayo educativo con tres grupos. Un grupo control no recibió intervención, y dos grupos de intervención, de dos sedes universitarias distintas, usaron la misma herramienta para mejorar la lectura crítica. Se midió antes y después.</p>
+    </div>
+    <div class="annot">
+      <div><span class="label">Párrafo 1</span><p>Parte del objetivo general y resume los hallazgos principales. Los grupos de intervención diferían antes de empezar, el grupo control empeoró, el grupo de la sede 1 mejoró de forma significativa, el de la sede 2 no mostró mejoras importantes y al final no hubo diferencias significativas entre los dos grupos de intervención.</p></div>
+      <div><span class="label">Párrafo 2</span><p>Aborda la diferencia de base entre los grupos de intervención. Explica por qué era esperable si se considera la población que atiende cada universidad.</p></div>
+      <div><span class="label">Párrafo 3</span><p>Discute el empeoramiento del grupo control. Propone una explicación, como la falta de incentivo académico, que más adelante se reporta también como limitación. Si hay covariables disponibles, este párrafo puede profundizarse.</p></div>
+      <div><span class="label">Párrafo 4</span><p>Trata la mejora del grupo 1 y la falta de mejora del grupo 2. Busca estudios que indiquen si este tipo de herramientas beneficia más a quienes parten de un nivel lector más bajo, y ofrece esa posibilidad como explicación si la literatura la respalda.</p></div>
+      <div><span class="label">Párrafo 5</span><p>Analiza la ausencia de diferencias entre los grupos de intervención al final. Discute si la herramienta ayudó a reducir la brecha lectora entre las dos sedes y qué importancia tiene ese resultado.</p></div>
+      <div><span class="label">Párrafo 6</span><p>Expone las limitaciones. Precisa hasta dónde se puede interpretar el estudio, qué se puede asegurar y qué queda pendiente.</p></div>
+    </div>
+    <div class="note">
+      <span class="label">Un cuidado en el párrafo 5</span>
+      <p>No encontrar diferencias en la medición final no demuestra por sí solo que los grupos quedaron iguales. Si el argumento es que la brecha se cerró, conviene mostrar cómo cambió la diferencia entre grupos desde la medición inicial, con su intervalo de confianza.</p>
+    </div>
+
+    <div class="prose">
+      <h3>La misma receta en otros diseños</h3>
+      <p>La estructura no cambia. Lo que cambia es el tipo de hallazgo que se discute y las limitaciones que suelen aparecer.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Diseño</th><th>Párrafo de apertura</th><th>Párrafos por hallazgo</th><th>Limitaciones frecuentes</th></tr></thead>
+        <tbody>
+          <tr><td>Transversal descriptivo</td><td>El perfil principal de la muestra</td><td>Cada característica relevante frente a valores de referencia u otras poblaciones</td><td>Muestreo, una sola medición, generalización</td></tr>
+          <tr><td>Transversal analítico</td><td>Las asociaciones o correlaciones principales</td><td>Una asociación por párrafo, con su dirección, su magnitud y su plausibilidad</td><td>Temporalidad, confusión, imposibilidad de inferir causalidad</td></tr>
+          <tr><td>Longitudinal o de cohorte</td><td>El cambio o la incidencia observada</td><td>Cada desenlace frente a otras cohortes</td><td>Pérdidas en el seguimiento, confusión</td></tr>
+          <tr><td>Ensayo controlado</td><td>El efecto sobre el desenlace principal</td><td>Diferencias basales, cambio en el control, cambio en la intervención, comparación entre grupos</td><td>Cegamiento, adherencia, tamaño de la muestra, generalización</td></tr>
+          <tr><td>Validez y fiabilidad</td><td>Las propiedades de medida principales</td><td>Cada propiedad frente a otros instrumentos o dispositivos</td><td>Muestra, contexto de evaluación, rango de valores</td></tr>
+          <tr><td>Revisión con metaanálisis</td><td>El efecto combinado y la certeza de la evidencia</td><td>Cada síntesis o subgrupo frente a revisiones previas</td><td>Limitaciones de la evidencia y del proceso de revisión</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <h3>Tu mesa de trabajo</h3>
+      <p>Escribe tu objetivo general, tus hallazgos uno por línea y tus limitaciones. A la derecha aparece el plan de párrafos de tu discusión.</p>
+    </div>
+    <div class="bench" id="bench-disc">
+      <div class="bench-in">
+        <div class="bench-head"><span class="example-flag" data-flag>Ejemplo cargado</span>
+          <div class="btns"><button type="button" class="ghost" data-clear>Vaciar</button><button type="button" class="ghost" data-example>Ver ejemplo</button></div></div>
+        <label for="in-dobj">Objetivo general<input id="in-dobj" data-k="dobj"></label>
+        <label for="in-find">Hallazgos principales<span>Uno por línea, en el orden de los resultados.</span><textarea id="in-find" data-k="find" style="min-height:8rem"></textarea></label>
+        <label for="in-lim">Limitaciones<span>Lo que no puedes asegurar y lo que queda pendiente.</span><textarea id="in-lim" data-k="lim"></textarea></label>
+      </div>
+      <div class="bench-out">
+        <div class="bench-head"><span class="label">Plan de tu discusión</span><button type="button" data-copy>Copiar esquema</button></div>
+        <ol class="plan" data-out></ol>
+        <p class="status" data-status aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMPLATADO -->
+<section class="course" id="emplatado">
+  <div class="wrap">
+    <div class="course-head">
+      <span class="num">Para servir</span>
+      <h2>El orden en que se cocina</h2>
+      <p class="lead">El artículo se lee de la introducción a la discusión, pero no se escribe en ese orden. Empezar por los resultados te da algo concreto sobre lo cual construir el resto, y el título y el resumen se dejan para el final, cuando ya sabes exactamente qué encontraste.</p>
+    </div>
+    <ol class="order">
+      <li><b>Resultados</b><span>Salen de las tablas y figuras que ya tienes.</span></li>
+      <li><b>Metodología</b><span>Se adapta del protocolo y del artículo gemelo.</span></li>
+      <li><b>Introducción</b><span>Por capas, hasta el objetivo.</span></li>
+      <li><b>Discusión</b><span>Un hallazgo por párrafo.</span></li>
+      <li><b>Conclusiones</b><span>Breves y a la altura del diseño.</span></li>
+      <li><b>Resumen y título</b><span>Al final, con las cifras ya cerradas.</span></li>
+    </ol>
+    <div class="note">
+      <span class="label">Antes de servir</span>
+      <p>Compara cada cifra del resumen con los resultados, las tablas y las figuras. Las incoherencias numéricas son de lo primero que detectan los revisores.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Recetario de escritura científica. Material de acompañamiento para estudiantes de ciencias de la salud.</p>
+    <p>Las guías de reporte citadas se consultan en la red EQUATOR, <a href="https://www.equator-network.org/" target="_blank" rel="noopener noreferrer">equator-network.org</a>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- Atajos de metodología ---------- */
+  const D = d => 'https://doi.org/' + d;
+  const groups = [
+    {f:'obs', name:'Transversal descriptivo', guide:'STROBE', items:[
+      ['Condición física en bomberos del municipio de Padilla, Cauca: un estudio descriptivo','Revista Sapientía, 2022',D('10.54278/sapientia.v14i27.114')]]},
+    {f:'obs', name:'Transversal analítico', guide:'STROBE', items:[
+      ['Factors Associated with the Level of Physical Activity in Middle-Aged Colombian People during Lockdown in Response to COVID-19: A Cross-Sectional Study','Healthcare, 2022',D('10.3390/healthcare10061050')],
+      ['The Association of Cardiometabolic Disease with Psychological Factors in Colombian People during the COVID-19 Pandemic: A Cross-Sectional Study','Journal of Clinical Medicine, 2021',D('10.3390/jcm10214959')],
+      ['Asociación entre índice de masa corporal, estrato socioeconómico y atención plena en estudiantes de secundaria','RICCAFD, 2024',D('10.24310/riccafd.13.3.2024.19730')]]},
+    {f:'obs', name:'Correlacional', guide:'STROBE', items:[
+      ['Vertical jump performance and the relationship with sprint speed at 20 m and 50 m in professional soccer players','F1000Research, 2023',D('10.12688/f1000research.131225.1')]]},
+    {f:'obs', name:'Longitudinal observacional', guide:'STROBE', items:[
+      ['Influence of the COVID-19 Pandemic on Quality of Life, Mental Health, and Level of Physical Activity in Colombian University Workers: A Longitudinal Study','Journal of Clinical Medicine, 2022',D('10.3390/jcm11144104')]]},
+    {f:'otros', name:'Validez y fiabilidad', guide:'GRRAS · COSMIN', items:[
+      ['Validez y fiabilidad de la aplicación My Jump 2 para la estimación del tiempo de vuelo y la altura del salto vertical con una sola pierna en futbolistas de élite sub-20','Journal of Sport and Health Research, 2024','https://recyt.fecyt.es/index.php/JSHR/article/view/97670']]},
+    {f:'exp', name:'Ensayo controlado aleatorizado de dos brazos', guide:'CONSORT 2025', items:[
+      ['Enhancing Cognition in Older Adults with Mild Cognitive Impairment through High-Intensity Functional Training: A Single-Blind Randomized Controlled Trial','Journal of Clinical Medicine, 2023',D('10.3390/jcm12124049')],
+      ['Effects of High-Intensity Functional Training (HIFT) on the Functional Capacity, Frailty, and Physical Condition of Older Adults with Mild Cognitive Impairment: A Blind Randomized Controlled Clinical Trial','Life, 2023',D('10.3390/life13051224')],
+      ['Effects of Myofascial Release Using Finding-Oriented Manual Therapy Combined with Foam Roller on Physical Performance in University Athletes. A Randomized Controlled Study','IJERPH, 2023',D('10.3390/ijerph20021364')],
+      ['Effect of combined physical-cognitive training on the functional and cognitive capacity of older people with mild cognitive impairment: a randomized controlled trial','BMC Medicine, 2024',D('10.1186/s12916-024-03469-x')]]},
+    {f:'exp', name:'Ensayo controlado aleatorizado de tres brazos', guide:'CONSORT 2025', items:[
+      ['Effects of two different doses of HIFT on physical function, cognitive performance, and quality of life in older adults with Mild Cognitive Impairment','Journal of Exercise Science & Fitness, 2025',D('10.1016/j.jesf.2025.10.004')]]},
+    {f:'rev', name:'Revisión sistemática sin metaanálisis', guide:'PRISMA 2020 · SWiM', items:[
+      ['The Effects of High-Intensity Functional Training on Cognition in Older Adults with Cognitive Impairment: A Systematic Review','Healthcare, 2022',D('10.3390/healthcare10040670')],
+      ['Pelvic Floor Muscle Exercises as a Treatment for Urinary Incontinence in Postmenopausal Women: A Systematic Review of Randomized Controlled Trials','Healthcare, 2023',D('10.3390/healthcare11020216')],
+      ['Rhythmic Physical Activity and Global Cognition in Older Adults with and without Mild Cognitive Impairment: A Systematic Review','IJERPH, 2022',D('10.3390/ijerph191912230')]]},
+    {f:'rev', name:'Revisión sistemática con metaanálisis', guide:'PRISMA 2020', items:[
+      ['Dose-response relationship of high-intensity training on global cognition in older adults with mild cognitive impairment or dementia: a systematic review with meta-analysis (ACHIEVE)','European Review of Aging and Physical Activity, 2024',D('10.1186/s11556-024-00358-3')],
+      ['Effectiveness of telemedicine for reducing cardiovascular risk: A systematic review and meta-analysis','Journal of Clinical Medicine, 2023',D('10.3390/jcm12030841')],
+      ['Mind-Body Training: A Plausible Strategy against Osteomuscular Chronic Pain. A Systematic Review with Meta-Analysis','Journal of Personalized Medicine, 2024',D('10.3390/jpm14020200')],
+      ['Dosis-respuesta del entrenamiento excéntrico para prevenir lesiones en isquiotibiales en futbolistas: una revisión sistemática con metaanálisis','Retos, 2024',D('10.47197/retos.v57.104960')]]},
+    {f:'rev', name:'Metaanálisis de estudios observacionales', guide:'PRISMA 2020 · MOOSE', items:[
+      ['Does an association among sarcopenia and metabolic risk factors exist in people older than 65 years? A systematic review and meta-analysis of observational studies','Life, 2023',D('10.3390/life13030648')]]},
+    {f:'rev', name:'Revisión narrativa', guide:'SANRA', items:[
+      ['Current Status of the Diagnosis and Management of Osteoporosis','International Journal of Molecular Sciences, 2022',D('10.3390/ijms23169465')]]},
+    {f:'otros', name:'Artículo metodológico', guide:'Sin guía única', items:[
+      ['Análisis cinemático del ángulo de proyección frontal de rodilla en 2D: enfoque metodológico','RICCAFD, 2022',D('10.24310/riccafd.2022.v11i3.15370')]]},
+  ];
+  const external = [
+    {f:'obs', name:'Cohorte prospectiva o casos y controles', guide:'STROBE', text:'Busca un artículo con este diseño en la revista elegida y revisa la lista STROBE de cohortes o de casos y controles.'},
+    {f:'exp', name:'Cuasiexperimental', guide:'TREND', text:'Para intervenciones sin asignación aleatoria se usa la guía TREND. Busca un modelo con grupo de comparación y mediciones antes y después.'},
+    {f:'otros', name:'Precisión diagnóstica', guide:'STARD', text:'Busca un estudio que compare una prueba con un patrón de referencia y sigue la lista STARD.'},
+    {f:'rev', name:'Revisión de alcance', guide:'PRISMA-ScR', text:'Para mapear la evidencia sobre un tema amplio, busca una revisión de alcance publicada y sigue PRISMA-ScR.'},
+    {f:'rev', name:'Revisión de revisiones', guide:'PRIOR', text:'Para sintetizar revisiones sistemáticas existentes, busca una revisión paraguas y la guía PRIOR.'},
+    {f:'exp', name:'Protocolo de ensayo', guide:'SPIRIT', text:'Si vas a publicar el protocolo antes del ensayo, busca un protocolo publicado y sigue la guía SPIRIT.'}
+  ];
+  const box = document.getElementById('methods');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function drawMethods(filter){
+    const cards = groups.filter(g => filter==='todos' || g.f===filter).map(g =>
+      `<article class="mcard"><h4>${esc(g.name)}</h4><span class="guide">${esc(g.guide)}</span><ul>${g.items.map(i =>
+        `<li><a href="${esc(i[2])}" target="_blank" rel="noopener noreferrer">${esc(i[0])}</a><small>${esc(i[1])}</small></li>`).join('')}</ul></article>`);
+    const ext = external.filter(g => filter==='todos' || g.f===filter).map(g =>
+      `<article class="mcard external"><h4>${esc(g.name)}</h4><span class="guide">${esc(g.guide)}</span><p>${esc(g.text)}</p><p><a href="https://www.equator-network.org/" target="_blank" rel="noopener noreferrer">Buscar la guía en EQUATOR</a></p></article>`);
+    box.innerHTML = cards.concat(ext).join('');
+  }
+  document.querySelectorAll('.chip').forEach(ch => ch.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c===ch)));
+    drawMethods(ch.dataset.f);
+  }));
+  drawMethods('todos');
+
+  /* ---------- Mesas de trabajo ---------- */
+  const store = {
+    get(k){ try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  };
+  const lines = t => (t||'').split('\n').map(s => s.trim()).filter(Boolean);
+  const or = (v, ph) => v && v.trim() ? esc(v.trim()) : `<em>${ph}</em>`;
+
+  const benches = {
+    'bench-intro': {
+      example: {
+        ctx:'Colombia vive una transición demográfica acelerada. El índice de envejecimiento pasó de 12 a 49 personas mayores por cada 100 menores de 15 años entre 1950 y 2020.',
+        v1:'Deterioro cognitivo leve en personas mayores',
+        v2:'Entrenamiento de alta intensidad',
+        v3:'Cognición global',
+        ant:'Revisiones previas muestran beneficios del ejercicio sobre la cognición, con gran heterogeneidad entre protocolos.',
+        dif:'Ninguna ha establecido qué dosis de entrenamiento de alta intensidad produce el mayor efecto.',
+        obj:'Determinar la relación dosis-respuesta del entrenamiento de alta intensidad sobre la cognición global en personas mayores con deterioro cognitivo leve o demencia.'
+      },
+      render(v){
+        const out = [];
+        out.push(['Párrafo 1 · Contexto', or(v.ctx,'Escribe el dato con que abrirás.')]);
+        let n = 2;
+        ['v1','v2','v3'].forEach((k,i) => {
+          if (v[k] && v[k].trim()) out.push([`Párrafo ${n++} · Variable ${i+1}`, `${esc(v[k].trim())}. Qué es, cómo se mide y por qué importa estudiarla.`]);
+        });
+        if (n===2) out.push(['Párrafos 2 a 4 · Variables', '<em>Escribe al menos una variable.</em>']);
+        out.push([`Párrafo ${Math.max(n,3)} · Antecedentes`, or(v.ant,'Resume lo que se ha investigado.')]);
+        out.push([`Párrafo ${Math.max(n,3)+1} · Lo que falta`, or(v.dif,'Escribe en qué se diferencia tu estudio.')]);
+        out.push(['Cierre · Objetivo general', or(v.obj,'Escribe tu objetivo en una oración.')]);
+        return out;
+      }
+    },
+    'bench-res': {
+      example: {
+        flow:'CONSORT',
+        objs:'Comparar las características basales de los tres grupos.\nDeterminar el cambio en la lectura crítica dentro de cada grupo entre la medición inicial y la final.\nComparar la lectura crítica entre los grupos en la medición final.'
+      },
+      render(v){
+        const out = [];
+        out.push(['3.1 · Participantes', `Diagrama de flujo ${v.flow && v.flow.trim() ? esc(v.flow.trim()) : ''} con evaluados, incluidos, pérdidas y sus razones.`]);
+        out.push(['3.2 · Características basales', 'Tabla 1 con la descripción de la muestra y comentario de lo más relevante.']);
+        const objs = lines(v.objs);
+        if (!objs.length) out.push(['3.3 · Objetivo específico 1', '<em>Escribe tus objetivos específicos, uno por línea.</em>']);
+        objs.forEach((o,i) => out.push([`3.${i+3} · Objetivo específico ${i+1}`, `${esc(o)} Describe los datos, indica cómo se revisaron los supuestos, presenta la prueba o la estimación y cierra con el tamaño del efecto y su IC 95 %.`]));
+        return out;
+      }
+    },
+    'bench-disc': {
+      example: {
+        dobj:'Evaluar el efecto de un tutor académico con inteligencia artificial sobre la lectura crítica de estudiantes universitarios de dos sedes.',
+        find:'Los grupos de intervención diferían en la medición inicial.\nEl grupo control empeoró durante el periodo.\nEl grupo de la sede 1 mejoró de forma significativa y el de la sede 2 no mostró mejoras importantes.\nNo hubo diferencias significativas entre los grupos de intervención en la medición final.',
+        lim:'Falta de incentivo académico en el grupo control. Asignación por sede. Imposibilidad de atribuir el cierre de la brecha solo a la herramienta.'
+      },
+      render(v){
+        const out = [];
+        const f = lines(v.find);
+        out.push(['Párrafo 1 · Apertura', `${or(v.dobj,'Recuerda el objetivo general.')} ${f.length ? 'Resume ' + f.length + (f.length===1?' hallazgo':' hallazgos') + ' en este orden.' : ''}`]);
+        if (!f.length) out.push(['Párrafo 2 · Hallazgo 1', '<em>Escribe tus hallazgos, uno por línea.</em>']);
+        f.forEach((h,i) => out.push([`Párrafo ${i+2} · Hallazgo ${i+1}`, `${esc(h)} Compáralo con otros estudios, propone una explicación y di qué implica.`]));
+        out.push([`Párrafo ${Math.max(f.length,1)+2} · Limitaciones`, `${or(v.lim,'Escribe lo que no puedes asegurar.')} Cierra con lo que queda pendiente para futuras investigaciones.`]);
+        return out;
+      }
+    }
+  };
+
+  Object.entries(benches).forEach(([id, cfg]) => {
+    const root = document.getElementById(id);
+    const fields = [...root.querySelectorAll('[data-k]')];
+    const out = root.querySelector('[data-out]');
+    const status = root.querySelector('[data-status]');
+    const flag = root.querySelector('[data-flag]');
+    const key = 'recetario:' + id;
+    let isExample = false;
+
+    const read = () => Object.fromEntries(fields.map(f => [f.dataset.k, f.value]));
+    const fill = v => fields.forEach(f => { f.value = v[f.dataset.k] || ''; });
+    function draw(){
+      out.innerHTML = cfg.render(read()).map(([t,b]) => `<li><b>${t}</b><span>${b}</span></li>`).join('');
+      flag.hidden = !isExample;
+    }
+    function load(){
+      const saved = store.get(key);
+      if (saved && Object.values(saved).some(x => x && x.trim())) { fill(saved); isExample = false; }
+      else { fill(cfg.example); isExample = true; }
+      draw();
+    }
+    fields.forEach(f => f.addEventListener('input', () => { isExample = false; store.set(key, read()); draw(); }));
+    root.querySelector('[data-clear]').addEventListener('click', () => { fill({}); isExample = false; store.set(key, read()); draw(); status.textContent = 'Mesa vacía. Empieza a escribir.'; });
+    root.querySelector('[data-example]').addEventListener('click', () => { fill(cfg.example); isExample = true; draw(); status.textContent = 'Ejemplo cargado. No se guarda hasta que lo modifiques.'; });
+    root.querySelector('[data-copy]').addEventListener('click', () => {
+      const text = [...out.querySelectorAll('li')].map(li => li.querySelector('b').textContent + '\n' + li.querySelector('span').textContent).join('\n\n');
+      const done = () => { status.textContent = 'Esquema copiado.'; };
+      const fallback = () => {
+        const r = document.createRange(); r.selectNodeContents(out);
+        const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        status.textContent = 'Texto seleccionado. Cópialo con Ctrl+C o Cmd+C.';
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+    load();
+  });
+})();
+</script>
+
+</body></html>
