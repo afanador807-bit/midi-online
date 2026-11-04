@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="es" data-page="estadistica">
+<head>
+<meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..800;1,8..60,400..700&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Guía interactiva para decidir, ejecutar e interpretar análisis estadísticos en investigación cuantitativa en salud, con datos ficticios.">
+<meta name="theme-color" content="#001282">
+<title>Estadística en salud | Guía interactiva</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../assets/sitio.css">
+<script defer src="../assets/sitio.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="back-link" href="../index.html">← <img class="perfil-mini" src="../assets/perfil.jpg" width="32" height="32" alt="" decoding="async"> Página personal</a>
+    <span class="status-tag"><span class="status-dot" aria-hidden="true"></span> Guía interactiva · 10 rutas con tutoriales</span>
+  </div>
+</header>
+<main id="contenido">
+  <section class="hero" id="buscador">
+    <div class="hero-inner">
+      <p class="eyebrow">Estadística en salud</p>
+      <h1>Profe, ¿qué prueba uso?</h1>
+      <p class="hero-lead">La respuesta casi nunca está en la prueba, sino en tu pregunta, tu diseño y la forma de tus datos. Responde dos preguntas y te llevo a tu ruta.</p>
+      <div class="finder" id="finder"></div>
+      <p class="hero-note">Todos los datos son inventados: sirven para aprender a analizar, no para tomar decisiones clínicas.</p>
+    </div>
+  </section>
+
+  <section class="section wrap" id="ruta" hidden>
+    <div class="section-heading route-heading"><h2>Tu ruta</h2><label class="route-picker"><span>Cambiar de ruta</span><select id="routeSelect"></select></label></div>
+    <div class="workbench" id="workbench">
+      <aside class="module-summary" id="moduleSummary" aria-live="polite"></aside>
+      <div class="module-workspace">
+        <div class="step-tabs" id="moduleTabs" role="tablist" aria-label="Pasos de la ruta"></div>
+        <div class="sub-tabs" id="moduleSubnav" role="group" aria-label="Secciones del paso"></div>
+        <article class="module-content" id="moduleContent" role="tabpanel" tabindex="0"></article>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner"><div><b>Estadística en salud</b><p>Análisis cuantitativo con casos inventados.</p></div><div class="footer-links"><a href="../index.html">Volver a la página personal</a><a href="https://docs.jamovi.org/analyses/jg_overview.html" target="_blank" rel="noopener">Documentación oficial de jamovi ↗</a></div></div></footer>
+<script src="app.js" defer></script>
+</body>
+</html>
